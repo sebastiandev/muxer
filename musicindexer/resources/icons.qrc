@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/icons">
+        <file>icons/collection.png</file>
+        <file>icons/import.png</file>
+        <file>icons/search.png</file>
+        <file>icons/similarity.png</file>
+        <file>icons/tear.png</file>
+        <file>icons/cd.png</file>
+        <file>icons/artist.png</file>
+    </qresource>
+</RCC>
