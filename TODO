@@ -1,0 +1,7 @@
+excepciones varias (dataservice, indexer, similaritymanager, musicmanager)
+El normalizador de generos debe devolver una lista/par, con el genero normalizado y en caso de que sea un subgenero, el genero madre
+GUI de resultados
+GUI similaridad
+GUI coleccion musical
+Opcion de reproducir el tema o album seleccionado
+Opcion de editar los atributos de una canción (modificar los datos almacenados en el indexador y en la base de similitud)
