@@ -8,7 +8,8 @@ HEADERS += \
     database/songfinder.h \
     database/genrexmlreader.h \
     database/genresteammer.h \
-    database/similaritydataservice.h
+    database/similaritydataservice.h \
+    database/IndexerException.h
 
 SOURCES += \
     database/songindexer.cpp \
@@ -20,6 +21,7 @@ SOURCES += \
 
 
 LIBS += -lxapian
+
 
 
 
