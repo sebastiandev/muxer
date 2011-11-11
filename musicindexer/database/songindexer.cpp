@@ -4,10 +4,12 @@
 #include "configuration/ConfigurationManager.h"
 #include "logging/LoggerManager.h"
 #include <iostream>
+#include "IndexerException.h"
 
-SongIndexer::SongIndexer(Xapian::WritableDatabase &database)
+SongIndexer::SongIndexer(Xapian::WritableDatabase &database, QStringList stopWords=QStringList())
 {
     db = database;
+    _stopwords = stopWords;
 }
 
 void SongIndexer::setDataBase(Xapian::WritableDatabase &database)
@@ -25,13 +27,47 @@ void SongIndexer::index(const QString &path, const Song &song)
         LoggerManager::LogDebug("[Song Indexer] indexing " + path);
         LoggerManager::LogDebug("[Song Indexer] --------------------------------------------------");
 
-        addTermsToDocument(doc, song.getTitle());
-        addTermsToDocument(doc, song.getArtist());
-        addTermsToDocument(doc, song.getAlbum());
-        addTermsToDocument(doc, song.getYear());
-        addTermsToDocument(doc, song.getType(), ",");
+        if (!addTermsToDocument(doc, song.getTitle()))
+        {
+            IndexerException e("Empty song title", path);
+            e.setErrorCode(EMPTY_TERM);
+            throw (e);
+        }
 
-        addNormalizedGenresToDocument(doc, song.getGenres());
+        if (!addTermsToDocument(doc, song.getArtist()))
+        {
+            IndexerException e("Empty song artist", path);
+            e.setErrorCode(EMPTY_TERM);
+            throw (e);
+        }
+
+        if (!addTermsToDocument(doc, song.getAlbum()))
+        {
+            IndexerException e("Empty song album", path);
+            e.setErrorCode(EMPTY_TERM);
+            throw (e);
+        }
+
+        if (!addTermsToDocument(doc, song.getYear()))
+        {
+            IndexerException e("Empty song year", path);
+            e.setErrorCode(EMPTY_TERM);
+            throw (e);
+        }
+
+        if (!addTermsToDocument(doc, song.getType(), ","))
+        {
+            IndexerException e("Empty song type", path);
+            e.setErrorCode(EMPTY_TERM);
+            throw (e);
+        }
+
+        if (!addNormalizedGenresToDocument(doc, song.getGenres()))
+        {
+            IndexerException e("Empty song genre", path);
+            e.setErrorCode(EMPTY_TERM);
+            throw (e);
+        }
 
         LoggerManager::LogDebug("[Song Indexer] --------------------------------------------------");
 
@@ -41,19 +77,29 @@ void SongIndexer::index(const QString &path, const Song &song)
     catch (const Xapian::Error &e)
     {
         std::cout << e.get_description() << std::endl;
+        IndexerException ie(e.get_description().c_str(), path);
+        ie.setErrorCode(DATABASE_ERROR);
+        throw (ie);
     }
 }
 
-void SongIndexer::addTermsToDocument(Xapian::Document &doc, const QString &buffer, const QString &separator)
+bool SongIndexer::addTermsToDocument(Xapian::Document &doc, const QString &buffer, const QString &separator)
 {
     // Indexes every single word from buffer, and then the whole thing joined with '_'
-    if (!buffer.isEmpty())
+    if (buffer.isEmpty())
+    {
+        return false;
+    }
+    else
     {
         QStringList var = buffer.split(separator);
-        foreach(const QString &str, var)
+        foreach(const QString &term, var)
         {
-            LoggerManager::LogDebug("[Song Indexer] adding term " + str.trimmed().toLower());
-            doc.add_term(str.trimmed().toLower().toStdString());
+            if (!_stopwords.contains(term, Qt::CaseInsensitive))
+            {
+                LoggerManager::LogDebug("[Song Indexer] adding term " + term.trimmed().toLower());
+                doc.add_term(term.trimmed().toLower().toStdString());
+            }
         }
 
         // join only when there are 2 or more terms
@@ -63,11 +109,17 @@ void SongIndexer::addTermsToDocument(Xapian::Document &doc, const QString &buffe
             LoggerManager::LogDebug("[Song Indexer] adding term " + var.join("_").toLower());
         }
     }
+
+    return true;
 }
 
-void SongIndexer::addNormalizedGenresToDocument(Xapian::Document &doc, const QStringList &buffer)
+bool SongIndexer::addNormalizedGenresToDocument(Xapian::Document &doc, const QStringList &buffer)
 {
-    if (!buffer.isEmpty())
+    if (buffer.isEmpty())
+    {
+        return false;
+    }
+    else
     {
         TagNormalizator normalizator(ConfigurationManager::GetString("genresdb"), 4);
 
@@ -78,5 +130,7 @@ void SongIndexer::addNormalizedGenresToDocument(Xapian::Document &doc, const QSt
             doc.add_term(normalizedTermn.toStdString());
         }
     }
+
+    return true;
 }
 
