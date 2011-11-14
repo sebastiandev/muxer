@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>albumInfo</class>
+ <widget class="QWidget" name="albumInfo">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>337</width>
+    <height>450</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="spacing">
+    <number>5</number>
+   </property>
+   <property name="margin">
+    <number>5</number>
+   </property>
+   <item>
+    <widget class="QWidget" name="wWrapper" native="true">
+     <property name="styleSheet">
+      <string notr="true">#wWrapper {
+	background-color: rgba(236, 236, 236, 100);
+	border-radius: 3px;
+	border: 2px solid rgba(241, 241, 241, 180);
+
+}</string>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_2">
+      <property name="spacing">
+       <number>0</number>
+      </property>
+      <property name="margin">
+       <number>5</number>
+      </property>
+      <item>
+       <widget class="QWidget" name="wContainer" native="true">
+        <property name="styleSheet">
+         <string notr="true">#wContainer {
+	background-color: rgba(223, 223, 223, 120);
+	border: 0px solid gray;
+	border-radius: 3px;
+
+}</string>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_3">
+         <property name="spacing">
+          <number>2</number>
+         </property>
+         <property name="margin">
+          <number>0</number>
+         </property>
+         <item>
+          <widget class="QWidget" name="wImage" native="true"/>
+         </item>
+         <item>
+          <widget class="QWidget" name="wInfo" native="true">
+           <property name="styleSheet">
+            <string notr="true">#wInfo {
+
+
+}</string>
+           </property>
+           <layout class="QFormLayout" name="formLayout">
+            <property name="fieldGrowthPolicy">
+             <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
+            </property>
+            <property name="rowWrapPolicy">
+             <enum>QFormLayout::DontWrapRows</enum>
+            </property>
+            <property name="labelAlignment">
+             <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+            </property>
+            <property name="verticalSpacing">
+             <number>2</number>
+            </property>
+            <property name="leftMargin">
+             <number>9</number>
+            </property>
+            <property name="topMargin">
+             <number>1</number>
+            </property>
+            <property name="rightMargin">
+             <number>9</number>
+            </property>
+            <property name="bottomMargin">
+             <number>5</number>
+            </property>
+            <item row="0" column="0">
+             <widget class="QLabel" name="lArtist">
+              <property name="text">
+               <string>Artist:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="0">
+             <widget class="QLabel" name="lAlbum">
+              <property name="text">
+               <string>Album:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="0">
+             <widget class="QLabel" name="lYear">
+              <property name="text">
+               <string>Year:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="1">
+             <widget class="QLabel" name="inputArtist">
+              <property name="text">
+               <string/>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="1">
+             <widget class="QLabel" name="inputAlbum">
+              <property name="text">
+               <string/>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="1">
+             <widget class="QLabel" name="inputYear">
+              <property name="text">
+               <string/>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item>
+          <widget class="QTableWidget" name="twSongs">
+           <property name="styleSheet">
+            <string notr="true">#twSongs {
+	background-color: transparent;
+	border-radius: 3px;
+}
+
+QHeaderView {
+	background-color: gray;
+	border: 0px;
+	border-top-left-radius: 3px;
+	border-top-right-radius: 3px;
+	color: white;
+	padding-left: 2px;
+}
+
+QHeaderView::section {
+	background-color: transparent;
+	border: 0px;
+}
+
+QScrollBar:horizontal {
+     border: 0.5px solid grey;/*rgb(200, 200, 255);*/
+	 border-radius: 5px;
+     background-color: rgba(232, 232, 232, 150);
+     height: 10px;
+     margin: 0px 5px 0px 5px;
+ }
+ QScrollBar::handle:horizontal {
+     background-color: rgb(95, 95, 95);
+	 border: 0px;
+	 border-radius: 3px;	
+ }
+ 
+QScrollBar::add-line:horizontal {
+     border: 0px solid grey;
+     background: none;
+     width: 0px;
+ }
+
+ QScrollBar::sub-line:horizontal {
+     border: 0px solid grey;
+	 background: none;
+     width: 0px;
+   
+ }</string>
+           </property>
+           <property name="frameShape">
+            <enum>QFrame::NoFrame</enum>
+           </property>
+           <property name="editTriggers">
+            <set>QAbstractItemView::NoEditTriggers</set>
+           </property>
+           <property name="showDropIndicator" stdset="0">
+            <bool>false</bool>
+           </property>
+           <property name="dragDropOverwriteMode">
+            <bool>false</bool>
+           </property>
+           <property name="showGrid">
+            <bool>false</bool>
+           </property>
+           <property name="cornerButtonEnabled">
+            <bool>false</bool>
+           </property>
+           <attribute name="horizontalHeaderHighlightSections">
+            <bool>false</bool>
+           </attribute>
+           <attribute name="horizontalHeaderMinimumSectionSize">
+            <number>20</number>
+           </attribute>
+           <attribute name="verticalHeaderVisible">
+            <bool>false</bool>
+           </attribute>
+           <attribute name="verticalHeaderHighlightSections">
+            <bool>false</bool>
+           </attribute>
+           <column>
+            <property name="text">
+             <string>Song</string>
+            </property>
+            <property name="textAlignment">
+             <set>AlignLeft|AlignVCenter</set>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>Length</string>
+            </property>
+            <property name="textAlignment">
+             <set>AlignHCenter|AlignVCenter|AlignCenter</set>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>Quality</string>
+            </property>
+            <property name="textAlignment">
+             <set>AlignHCenter|AlignVCenter|AlignCenter</set>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>Genres</string>
+            </property>
+           </column>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

@@ -8,7 +8,7 @@
 #include <QDesktopWidget>
 
 MainWindow::MainWindow(QWidget *parent) :
-    QWidget(parent, Qt::WindowStaysOnTopHint)
+    QWidget(parent, Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint)
 {
     ui.setupUi(this);
 
@@ -16,9 +16,10 @@ MainWindow::MainWindow(QWidget *parent) :
     installEventFilter(this);
     setAttribute(Qt::WA_TranslucentBackground,true);
 
+    /*
     QRegion visibleArea(this->x() + 2, this->y() , this->width() - 4, this->height());
     setMask(visibleArea);
-
+    */
     move(QApplication::desktop()->availableGeometry().width()/2 - this->width()/2, 100);
 
     QGraphicsDropShadowEffect *effect = new QGraphicsDropShadowEffect();
@@ -26,7 +27,7 @@ MainWindow::MainWindow(QWidget *parent) :
     effect->setXOffset(-0.0);
     effect->setYOffset(-0.0);
 
-    ui.widget->setGraphicsEffect(effect);
+    ui.wContainer->setGraphicsEffect(effect);
 
     _musicViewer = new MusicViewer(this);
 
@@ -35,6 +36,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(this->ui.btCollection, SIGNAL(clicked()), this, SIGNAL(getCollectionTrigger()));
     connect(this->ui.btSimilarity, SIGNAL(clicked()), this, SIGNAL(showSimilarityTrigger()));
     connect(this->ui.btSearch    , SIGNAL(clicked()), this, SLOT(searchClicked()));
+    connect(this->ui.btClose     , SIGNAL(clicked()), this, SLOT(close()));
 
 }
 

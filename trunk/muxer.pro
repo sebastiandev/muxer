@@ -5,4 +5,4 @@
 #-------------------------------------------------
 
 TEMPLATE = subdirs
-SUBDIRS  = musicindexer test
+SUBDIRS  = musicindexer #test

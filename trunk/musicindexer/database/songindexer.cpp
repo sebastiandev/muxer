@@ -6,7 +6,7 @@
 #include <iostream>
 #include "IndexerException.h"
 
-SongIndexer::SongIndexer(Xapian::WritableDatabase &database, QStringList stopWords=QStringList())
+SongIndexer::SongIndexer(Xapian::WritableDatabase &database, QStringList stopWords)
 {
     db = database;
     _stopwords = stopWords;
@@ -30,42 +30,44 @@ void SongIndexer::index(const QString &path, const Song &song)
         if (!addTermsToDocument(doc, song.getTitle()))
         {
             IndexerException e("Empty song title", path);
-            e.setErrorCode(EMPTY_TERM);
+            e.setErrorCode(IndexerException::EMPTY_TERM);
             throw (e);
         }
 
         if (!addTermsToDocument(doc, song.getArtist()))
         {
             IndexerException e("Empty song artist", path);
-            e.setErrorCode(EMPTY_TERM);
+            e.setErrorCode(IndexerException::EMPTY_TERM);
             throw (e);
         }
 
         if (!addTermsToDocument(doc, song.getAlbum()))
         {
             IndexerException e("Empty song album", path);
-            e.setErrorCode(EMPTY_TERM);
+            e.setErrorCode(IndexerException::EMPTY_TERM);
             throw (e);
         }
 
         if (!addTermsToDocument(doc, song.getYear()))
         {
             IndexerException e("Empty song year", path);
-            e.setErrorCode(EMPTY_TERM);
+            e.setErrorCode(IndexerException::EMPTY_TERM);
             throw (e);
         }
 
+        /*
         if (!addTermsToDocument(doc, song.getType(), ","))
         {
             IndexerException e("Empty song type", path);
-            e.setErrorCode(EMPTY_TERM);
+            e.setErrorCode(IndexerException::EMPTY_TERM);
             throw (e);
         }
+        */
 
         if (!addNormalizedGenresToDocument(doc, song.getGenres()))
         {
             IndexerException e("Empty song genre", path);
-            e.setErrorCode(EMPTY_TERM);
+            e.setErrorCode(IndexerException::EMPTY_TERM);
             throw (e);
         }
 
@@ -78,7 +80,7 @@ void SongIndexer::index(const QString &path, const Song &song)
     {
         std::cout << e.get_description() << std::endl;
         IndexerException ie(e.get_description().c_str(), path);
-        ie.setErrorCode(DATABASE_ERROR);
+        ie.setErrorCode(IndexerException::DATABASE_ERROR);
         throw (ie);
     }
 }

@@ -9,8 +9,9 @@ public:
 
     IndexerException(const QString &msg):MException(msg){}
     IndexerException(const QString &msg, const QString &file):MException(msg){ _file = file;}
+    virtual ~IndexerException() throw() {}
 
-    Exception *clone() const { return new IndexerException(*this); }
+    IndexerException *clone() const { return new IndexerException(*this); }
 
     QString getFile() const { return _file;}
 
