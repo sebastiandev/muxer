@@ -4,6 +4,8 @@
 #include <QMap>
 #include <QStringList>
 #include "xapian.h"
+#include "xapian/database.h"
+
 #include "entities/song.h"
 
 class SongIndexer
@@ -21,8 +23,8 @@ private:
     Xapian::WritableDatabase db;
     QStringList _stopwords;
 
-    void addTermsToDocument           (Xapian::Document &doc, const QString &buffer, const QString &separator=QString(" "));
-    void addNormalizedGenresToDocument(Xapian::Document &doc, const QStringList &buffer);
+    bool addTermsToDocument           (Xapian::Document &doc, const QString &buffer, const QString &separator=QString(" "));
+    bool addNormalizedGenresToDocument(Xapian::Document &doc, const QStringList &buffer);
 
 };
 

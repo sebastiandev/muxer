@@ -12,13 +12,17 @@ class EntitiesUtil
 {
 public:
 
-    static Album getAlbumDataFromDir(const QString &dir);
-    static QList<Artist> getArtistsFromSongs(const QStringList &songs);
-    static QList<Album>  getAlbumsFromSongs (const QStringList &songs);
+    static Album         getAlbumDataFromDir (const QString &dir);
+    static QList<Artist> getArtistsFromSongs (const QStringList &songs);
+    static QList<Album>  getAlbumsFromSongs  (const QStringList &songs);
+    static QString       getAlbumPathFromFile(const QString &filePath);
 
 
 private:
     EntitiesUtil();
+
+    static Album* getAlbumFromFile(const QString &file);
+
 };
 
 #endif // ENTITIESUTIL_H

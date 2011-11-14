@@ -20,6 +20,7 @@ signals:
     void askForDirectory (QString*);
     void showSearchResult(const QStringList&);
     void showSimilarity  (const QStringList&);
+    void showCollection  (const QStringList&);
 
 public slots:
 

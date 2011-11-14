@@ -11,11 +11,11 @@ Controller::Controller(QObject *parent) :
     QObject(parent)
 {
 
-    //#ifdef FILE_LOGGER
+    #ifdef DEBUG
+      _logger.reset((ILogger *)new QDebugLogger());
+    #else
       _logger.reset((ILogger *)new FileLogger());
-    //#else
-    //  _logger.reset((ILogger *)new QDebugLogger());
-    //#endif
+    #endif
 
     IConfigurator *configurator = (IConfigurator *) new IniConfigurator("resources/config.conf");
     ConfigurationManager::SetConfigurator(configurator);
@@ -36,7 +36,8 @@ void Controller::init()
     connect(_mainwindow.data(), SIGNAL(showSimilarityTrigger()), this, SLOT(slotSimilarityClicked()));
 
     connect(this              , SIGNAL(showSearchResult(const QStringList&)), _mainwindow.data(), SLOT(slotShowSongs(const QStringList&)));
-    connect(this              , SIGNAL(showSimilarity(const QStringList&))  , _mainwindow.data(), SLOT(slotShowSimilarity(const QStringList&)));
+    connect(this              , SIGNAL(showCollection  (const QStringList&)), _mainwindow.data(), SLOT(slotShowSongs(const QStringList&)));
+    connect(this              , SIGNAL(showSimilarity  (const QStringList&)), _mainwindow.data(), SLOT(slotShowSimilarity(const QStringList&)));
 
     connect(this, SIGNAL(askForDirectory(QString*)), _mainwindow.data(), SLOT(slotAskForDirectory(QString*)));
 }
@@ -102,7 +103,7 @@ void Controller::slotAddResources()
 
 void Controller::slotCollectionClicked()
 {
-
+    emit showCollection(MusicManager::manager().getAllSongs());
 }
 
 void Controller::slotSimilarityClicked()

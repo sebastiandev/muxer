@@ -13,6 +13,8 @@
 #include "queryparser.h"
 #include "entities/song.h"
 #include "configuration/ConfigurationManager.h"
+#include "database/IndexerException.h"
+#include "logging/LoggerManager.h"
 
 MusicManager::~MusicManager()
 {
@@ -42,26 +44,6 @@ MusicManager& MusicManager::manager()
     return instance;
 }
 
-void MusicManager::addSongFromMap(QMap<QString, QString> songMap)
-{
-    Song song(songMap.value("title"),
-              songMap.value("album"),
-              songMap.value("artist"),
-              songMap.value("year"),
-              songMap.value("genre"),
-              songMap.value("key"),
-              songMap.value("tempo").toInt(),
-              songMap.value("type"));
-
-    _indexer.index(songMap.value("path"), song);
-}
-
-void MusicManager::addSongsFromMap(QList< QMap<QString, QString> > songs)
-{
-    for (int it=0; it < songs.size(); it++)
-        addSongFromMap(songs.at(it));
-}
-
 void MusicManager::addSongsFromDirectory(QString dirPath)
 {
     assert(!dirPath.isEmpty());
@@ -83,7 +65,16 @@ void MusicManager::addSongsFromDirectory(QString dirPath)
             TagLib::Tag *tag = taglibFile.tag();
             song = Song(tag->title().toCString(), tag->album().toCString(), tag->artist().toCString(), QString::number(tag->year()), tag->genre().toCString(), "", 100, "");
 
-            _indexer.index(file, song);
+            try
+            {
+                _indexer.index(file, song);
+            }
+            catch (IndexerException &ie)
+            {
+                qDebug() << "Error '" << ie.getMsg() << "' " << "indexing file: " << ie.getFile();
+                LoggerManager::LogDebug("[Music Manager] Error indexing file: " + ie.getFile() + ". Cause: " + ie.getMsg());
+                continue;
+            }
 
             if (song.getAlbum()  != currentAlbum.getTitle())
             {
@@ -93,41 +84,9 @@ void MusicManager::addSongsFromDirectory(QString dirPath)
                     currentAlbum.clear();
                 }
 
-
-                //// Obtain the album path (checking if there are several cds from the same album (cd1 cd 2..)
-                currentAlbumPath = file.mid(0, file.lastIndexOf("/"));
-
-                QDir auxDir(currentAlbumPath);
-                auxDir.cdUp();
-                QFileInfoList list = auxDir.entryInfoList(QDir::NoDotAndDotDot | QDir::Files | QDir::Dirs);
-                QFileInfoList sublist;
-
-                foreach(QFileInfo inf, list)
-                {
-                    if (inf.isDir() && inf.absoluteFilePath() != currentAlbumPath)
-                    {
-                        auxDir.setPath(inf.absoluteFilePath());
-                        sublist = auxDir.entryInfoList(QDir::NoDotAndDotDot | QDir::Files);
-                        break;
-                    }
-                }
-
-                // if the songs from the siblings folders have the same alubm, then is another cd from the same volume
-                // (we chop the CD 1 or Album 1 name from the path, leaving only the root album path
-                if (!sublist.isEmpty())
-                {
-                    TagLib::FileRef auxfile(sublist.first().absoluteFilePath().toUtf8().data());
-
-                    if (!auxfile.isNull() && auxfile.tag())
-                    {
-                        TagLib::Tag *auxtag = auxfile.tag();
-                        if (auxtag->album() == tag->album())
-                            currentAlbumPath = currentAlbumPath.mid(0, currentAlbumPath.lastIndexOf("/"));
-                    }
-                }
+                currentAlbumPath = EntitiesUtil::getAlbumPathFromFile(file);
 
                 qDebug () << "Album path: " << currentAlbumPath;
-                //////////////////////////////////////////////////////////////////////////////////////////////
 
                 currentAlbum.setArtist(song.getArtist());
                 currentAlbum.setTitle(song.getAlbum());

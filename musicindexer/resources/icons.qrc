@@ -7,5 +7,24 @@
         <file>icons/tear.png</file>
         <file>icons/cd.png</file>
         <file>icons/artist.png</file>
+        <file>icons/album.png</file>
+        <file>icons/artist_2.png</file>
+        <file>icons/artist_on.png</file>
+        <file>icons/close.png</file>
+        <file>icons/close_on.png</file>
+        <file>icons/genre.png</file>
+        <file>icons/genre_on.png</file>
+        <file>icons/song.png</file>
+        <file>icons/song_on.png</file>
+        <file>icons/user.png</file>
+        <file>icons/play.png</file>
+        <file>icons/album_64.png</file>
+        <file>icons/album_96.png</file>
+        <file>icons/album_small.png</file>
+        <file>icons/artist_folder_96.png</file>
+        <file>icons/muxer_icon.gif</file>
+        <file>icons/search_64.png</file>
+        <file>icons/search_96.png</file>
+        <file>icons/cd_real_96.png</file>
     </qresource>
 </RCC>

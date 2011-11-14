@@ -8,8 +8,9 @@ class MException : public QtConcurrent::Exception
  public:
 
     MException(const QString &msg){_msg = msg;}
+    virtual ~MException() throw() {}
 
-    virtual Exception *clone() const { return new MException(*this); }
+    virtual MException *clone() const { return new MException(*this); }
     void raise() const { throw *this; }
 
     QString getMsg      () const { return _msg;}

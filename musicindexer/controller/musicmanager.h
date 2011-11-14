@@ -15,9 +15,6 @@ public:
 
     static MusicManager& manager();
 
-    void addSongFromMap (QMap<QString, QString> song);
-    void addSongsFromMap(QList< QMap<QString, QString> > songs);
-
     void addSongsFromDirectory(QString dirPath);
     void addSongs(QStringList songsPath);
     void addSong(QString songPath);

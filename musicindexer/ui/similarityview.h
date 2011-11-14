@@ -28,8 +28,8 @@ public:
 signals:
 
     void artistSelected(const QString&);
-    void artistSimilarityReuqested(const QString&);
-    void albumSimilarityReuqested(const QString&, const QString&);
+    void artistSimilarityRequested(const QString&);
+    void albumSimilarityRequested(const QString&, const QString&);
 
 private slots:
 

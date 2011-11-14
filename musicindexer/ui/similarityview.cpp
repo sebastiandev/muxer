@@ -110,10 +110,10 @@ void SimilarityView::slotArtistSelected(QModelIndex index)
 
 void SimilarityView::slotArtistSearch()
 {
-    emit artistSimilarityReuqested(ui->listWidgetArtist->selectedItems().first()->text());
+    emit artistSimilarityRequested(ui->listWidgetArtist->selectedItems().first()->text());
 }
 void SimilarityView::slotAlbumSearch()
 {
     if (ui->listWidgetAlbum->selectedItems().size() > 0)
-        emit albumSimilarityReuqested(ui->listWidgetArtist->selectedItems().first()->text(), ui->listWidgetAlbum->selectedItems().first()->text());
+        emit albumSimilarityRequested(ui->listWidgetArtist->selectedItems().first()->text(), ui->listWidgetAlbum->selectedItems().first()->text());
 }

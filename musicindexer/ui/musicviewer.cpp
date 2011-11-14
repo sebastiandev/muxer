@@ -32,7 +32,7 @@ void MusicViewer::showSongs(const QStringList &songs)
 
     if (_collectionView == NULL)
     {
-        _collectionView = new CollectionView();
+        _collectionView = new SWidget();
         _collectionView->setWindowTitle("Songs View");
         if (parent() != NULL)
         {
@@ -130,21 +130,16 @@ void MusicViewer::showSimilarityScreen(const QStringList &songs)
 {
     _currentSongs = songs;
 
-    QStringList artists;
-    foreach (const Artist &artist, EntitiesUtil::getArtistsFromSongs(songs))
-    {
-        artists << artist.getName();
-    }
-
     if (_similarityView == NULL)
     {
-        _similarityView = new SimilarityView();
+        _similarityView = new Similarity();
         _similarityView->setWindowFlags(_similarityView->windowFlags() | Qt::Tool);
         _similarityView->setWindowTitle("Similarity");
 
-        connect(_similarityView, SIGNAL(artistSelected(const QString&))                         , this, SLOT(slotLoadAlbumsFromArtist(const QString&)));
-        connect(_similarityView, SIGNAL(artistSimilarityReuqested(const QString&))              , this, SLOT(slotGetArtistSimilarity(const QString&)));
-        connect(_similarityView, SIGNAL(albumSimilarityReuqested(const QString&,const QString&)), this, SLOT(slotGetAlbumSimilarity(const QString&, const QString&)));
+        connect(_similarityView, SIGNAL(artistSimilaritySelected()), this, SLOT(loadArtistForSimilarity()));
+        connect(_similarityView, SIGNAL(albumSimilaritySelected()) , this, SLOT(loadAlbumForSimilarity()));
+        connect(_similarityView, SIGNAL(artistSimilarityRequested(const QString&))              , this, SLOT(slotGetArtistSimilarity(const QString&)));
+        connect(_similarityView, SIGNAL(albumSimilarityRequested(const QString&,const QString&)), this, SLOT(slotGetAlbumSimilarity(const QString&, const QString&)));
 
         if (parent() != NULL)
         {
@@ -153,8 +148,29 @@ void MusicViewer::showSimilarityScreen(const QStringList &songs)
         }
     }
 
-    _similarityView->setArtists(artists);
     _similarityView->show();
+}
+
+void MusicViewer::loadArtistForSimilarity()
+{
+    QStringList artists;
+    foreach (const Artist &artist, EntitiesUtil::getArtistsFromSongs(_currentSongs))
+    {
+        artists << artist.getName();
+    }
+
+    _similarityView->setArtists(artists);
+}
+
+void MusicViewer::loadAlbumForSimilarity()
+{
+    QList<QPair<QImage, QString> > albums;
+    foreach (const Album &album, EntitiesUtil::getAlbumsFromSongs(_currentSongs))
+    {
+        albums.append(QPair<QImage, QString>(album.getCover(), album.getArtist() + " - " + album.getTitle()));
+    }
+
+    _similarityView->setAlbums(albums);
 }
 
 void MusicViewer::slotLoadAlbumsFromArtist(const QString &artist)
@@ -212,5 +228,4 @@ void MusicViewer::slotGetAlbumSimilarity(const QString &artist, const QString &a
         similar.append(QPair<QImage, QString>(a.getCover(), a.getArtist()+" - "+a.getTitle()));
 
     _similarityView->setSimilar(similar);
-
 }
