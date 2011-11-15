@@ -66,7 +66,7 @@ void TestSimilarityDataService::testAddAlbum()
         types.append(QPair<QString, int> ("Guitar", 2));
         types.append(QPair<QString, int> ("Voice", 2));
 
-        SimilarityDataService::service().addAlbumData(album, genres, types);
+        SimilarityDataService::service().addAlbumData("/media/Seba/Musica/Richie Kotzen/Discografia/2009 - Peace Sign", album, genres, types);
 
         // 2nd album
         Album album2("Go Faster", "Richie Kotzen");
@@ -85,7 +85,7 @@ void TestSimilarityDataService::testAddAlbum()
         types.append(QPair<QString, int> ("Guitar", 3));
         types.append(QPair<QString, int> ("Voice", 1));
 
-        SimilarityDataService::service().addAlbumData(album2, genres, types);
+        SimilarityDataService::service().addAlbumData("/media/Seba/Musica/Richie Kotzen/Discografia/2007 - Go Faster", album2, genres, types);
 
         // 3rd album
         Album album3("Slow", "Richie Kotzen");
@@ -103,7 +103,7 @@ void TestSimilarityDataService::testAddAlbum()
 
         types.append(QPair<QString, int> ("Guitar", 4));
 
-        SimilarityDataService::service().addAlbumData(album3, genres, types);
+        SimilarityDataService::service().addAlbumData("/media/Seba/Musica/Richie Kotzen/Discografia/2002 - Slow", album3, genres, types);
 
     }
     catch (...)

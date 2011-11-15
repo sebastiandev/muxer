@@ -123,13 +123,16 @@ bool SongIndexer::addNormalizedGenresToDocument(Xapian::Document &doc, const QSt
     }
     else
     {
-        TagNormalizator normalizator(ConfigurationManager::GetString("genresdb"), 4);
+        TagNormalizator normalizator(ConfigurationManager::GetString("genresdb"), ConfigurationManager::GetInt("maxIndexerNormalizingDistance"));
 
         foreach(const QString &str, buffer)
         {
-            QString normalizedTermn = normalizator.normalizeGenre(str).trimmed().toLower();
-            LoggerManager::LogDebug("[Song Indexer] adding genre " + normalizedTermn);
-            doc.add_term(normalizedTermn.toStdString());
+            QStringList normalizedTermns = normalizator.normalizeGenre(str);
+            foreach (const QString& genre, normalizedTermns)
+            {
+                LoggerManager::LogDebug("[Song Indexer] adding normalized genre " + genre.trimmed().toLower());
+                doc.add_term(genre.toStdString());
+            }
         }
     }
 

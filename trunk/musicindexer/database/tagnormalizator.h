@@ -13,10 +13,10 @@ public:
 
     QMap<QString, QString> normalizeTags(const QMap<QString, QString> &tags);
 
-    QString normalizeGenre    (const QString &genre);
-    QString normalizeArtist   (const QString &artist);
-    QString normalizeAlbum    (const QString &album);
-    QString normalizeAlbumDate(const QString &albumDate);
+    QStringList normalizeGenre    (const QString &genre);
+    QString     normalizeArtist   (const QString &artist);
+    QString     normalizeAlbum    (const QString &album);
+    QString     normalizeAlbumDate(const QString &albumDate);
 
 private:
 

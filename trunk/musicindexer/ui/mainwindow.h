@@ -22,7 +22,6 @@ signals:
 
 public slots:
     void slotAskForDirectory(QString *dir);
-    void slotShowSearchResult(const QStringList&);
     void slotShowSongs(const QStringList &songlist);
     void slotShowSimilarity(const QStringList &songlist);
 

@@ -17,7 +17,7 @@ QStringList QueryParser::expandQuery(const QString &query)
 {
     // we cant use a big distance because it could replace terms from the query that werent mean to be genres
     QStringList expandedQuery, queryList;
-    TagNormalizator normalizator(ConfigurationManager::GetString("genresdb"), 2);
+    TagNormalizator normalizator(ConfigurationManager::GetString("genresdb"), ConfigurationManager::GetInt("maxQueryNormalizingDistance"));
 
     queryList = query.split(" ");
     for(int i=0; i<queryList.size(); i++)
@@ -25,33 +25,37 @@ QStringList QueryParser::expandQuery(const QString &query)
         QString qterm = queryList.at(i);
         expandedQuery << qterm;
 
-        QString normedQ = normalizator.normalizeGenre(qterm);
-        if (qterm != normedQ && GenreManager::manager().hasGenre(normedQ))
+        QStringList normedQ = normalizator.normalizeGenre(qterm);
+        QString normToLookFor = normedQ.size() > 1 ? normedQ.at(1) : normedQ.first();
+
+        if (qterm != normToLookFor && GenreManager::manager().hasGenre(normToLookFor))
         {
-            expandedQuery << normedQ;//add the normalized genre
+            expandedQuery << normToLookFor;//add the normalized genre
         }
 
         // if there are 1 or more words left, those can make up a genre with the current term (ej. rock and roll, where rock is the current)
         if (queryList.size() - (i+1) >= 1)// (i+1) because index starts in 0
         {
             qterm += " " + queryList.at(i+1);
-            QString aux = normalizator.normalizeGenre(qterm);
+            QStringList aux = normalizator.normalizeGenre(qterm);
+            QString normToLookFor = aux.size() > 1 ? aux.at(1) : aux.first();
 
             // we try building a two word genre
-            if (GenreManager::manager().hasGenre(aux))
+            if (GenreManager::manager().hasGenre(normToLookFor))
             {
-                expandedQuery << aux;//add the normalized genre
+                expandedQuery << normToLookFor;//add the normalized genre
             }
 
             //try building a 3 word genre
             if (queryList.size() - (i+1) >= 2)
             {
                 qterm += " " + queryList.at(i+2);
-                QString aux = normalizator.normalizeGenre(qterm);
+                QStringList aux = normalizator.normalizeGenre(qterm);
+                QString normToLookFor = aux.size() > 1 ? aux.at(1) : aux.first();
 
-                if (GenreManager::manager().hasGenre(aux))
+                if (GenreManager::manager().hasGenre(normToLookFor))
                 {
-                    expandedQuery << aux;//add the normalized genre
+                    expandedQuery << normToLookFor;//add the normalized genre
                 }
             }
         }

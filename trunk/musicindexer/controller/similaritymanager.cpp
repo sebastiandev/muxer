@@ -44,10 +44,9 @@ QList<Album>  SimilarityManager::getSimilarAlbums(const Album &album)
     QList<Album> similarAlbums;
     foreach (const AlbumDataObject &r, result)
     {
-        //Album a(r.getTitle(), r.getArtist());//TODO: add every song in the album
         Album a = EntitiesUtil::getAlbumDataFromDir(r.getPath());
 
-        if (!similarAlbums.contains(a)) //add only once
+        if (!similarAlbums.contains(a) && a!=album) //add only once
             similarAlbums.append(a);
     }
 
