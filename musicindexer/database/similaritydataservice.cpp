@@ -57,18 +57,22 @@ SimilarityDataService& SimilarityDataService::service()
 
 void SimilarityDataService::addAlbumData(const QString &file, const Album &album, const QList< QPair<QString, int> > &genres, const QList< QPair<QString, int> > &types)
 {
+    QString artist = album.getArtist().replace("'", "_");
+    QString title  = album.getTitle().replace("'", "_");
+    QString filePath = QString(file).replace("'", "_");
+
     QSqlQuery query;
-    if (!query.exec("INSERT INTO albums (artist, title, average_tempo, path) VALUES ('" + album.getArtist().trimmed()+ "','" +
-                                                                                    album.getTitle().trimmed()  + "'," +
+    if (!query.exec("INSERT INTO albums (artist, title, average_tempo, path) VALUES ('" + artist.trimmed()+ "','" +
+                                                                                    title.trimmed()  + "'," +
                                                                                     QString::number(album.getAverageTempo()) +  "," +
-                                                                                    "'" + file + "');"))
+                                                                                    "'" + filePath + "');"))
         qDebug() << query.lastError().text() << ". Query: " << query.lastQuery();
 
     for (int i=0; i<genres.size(); i++)
     {
         QPair<QString, int> pair = genres.at(i);
-        if (!query.exec("INSERT INTO genres (artist, title, genre, ocurrency) VALUES ('" + album.getArtist().trimmed() + "','" +
-                                                                                        album.getTitle().trimmed()  + "','" +
+        if (!query.exec("INSERT INTO genres (artist, title, genre, ocurrency) VALUES ('" + artist.trimmed() + "','" +
+                                                                                        title.trimmed()  + "','" +
                                                                                         pair.first.trimmed() + "'," +
                                                                                         QString::number(pair.second) + ");"))
         qDebug() << query.lastError().text() << ". Query: " << query.lastQuery();
@@ -77,8 +81,8 @@ void SimilarityDataService::addAlbumData(const QString &file, const Album &album
     for (int i=0; i<types.size(); i++)
     {
         QPair<QString, int> pair = types.at(i);
-        if (!query.exec("INSERT INTO types (artist, title, type, ocurrency) VALUES ('" + album.getArtist().trimmed() + "','" +
-                                                                                        album.getTitle().trimmed()  + "','" +
+        if (!query.exec("INSERT INTO types (artist, title, type, ocurrency) VALUES ('" + artist.trimmed() + "','" +
+                                                                                        title.trimmed()  + "','" +
                                                                                         pair.first.trimmed() + "'," +
                                                                                         QString::number(pair.second) + ");"))
         qDebug() << query.lastError().text() << ". Query: " << query.lastQuery();
@@ -101,21 +105,28 @@ void SimilarityDataService::addAlbumData(const QString &file, const Album &album
 
 AlbumDataObject SimilarityDataService::getAlbumData(const Album &album)
 {
+    QString artist = album.getArtist().replace("'", "_");
+    QString title  = album.getTitle().replace("'", "_");
+
     AlbumDataObject data;
 
     QSqlQuery query;
-    if (!query.exec("SELECT artist, title, average_tempo, path FROM albums WHERE artist = '" + album.getArtist() +"' AND title = '"+ album.getTitle() +"';"))
+    if (!query.exec("SELECT artist, title, average_tempo, path FROM albums WHERE artist = '" + artist +"' AND title = '"+ title +"';"))
         qDebug() << query.lastError().text() << ". Query: " << query.lastQuery();
 
     while (query.next())
     {
-        data.setArtist(query.value(0).toString());
-        data.setTitle(query.value(1).toString());
+        QString artist = query.value(0).toString().replace("_", "'");
+        QString title  = query.value(1).toString().replace("_", "'");
+        QString file   = query.value(3).toString().replace("_", "'");
+
+        data.setArtist(artist);
+        data.setTitle(title);
         data.setAverageTempo(query.value(2).toInt());
-        data.setPath(query.value(3).toString());
+        data.setPath(file);
     }
 
-    if (!query.exec("SELECT artist, title, genre, ocurrency FROM genres WHERE artist = '" + album.getArtist() +"' AND title = '"+ album.getTitle() +"' ORDER BY ocurrency DESC;"))
+    if (!query.exec("SELECT artist, title, genre, ocurrency FROM genres WHERE artist = '" + artist +"' AND title = '"+ title +"' ORDER BY ocurrency DESC;"))
         qDebug() << query.lastError().text() << ". Query: " << query.lastQuery();
 
     while (query.next())
@@ -124,7 +135,7 @@ AlbumDataObject SimilarityDataService::getAlbumData(const Album &album)
     }
 
 
-    if (!query.exec("SELECT artist, title, type, ocurrency FROM types WHERE artist = '" + album.getArtist() +"' AND title = '"+ album.getTitle() +"' ORDER BY ocurrency DESC;"))
+    if (!query.exec("SELECT artist, title, type, ocurrency FROM types WHERE artist = '" + artist +"' AND title = '"+ title +"' ORDER BY ocurrency DESC;"))
         qDebug() << query.lastError().text() << ". Query: " << query.lastQuery();
 
     while (query.next())
@@ -200,8 +211,12 @@ QList<AlbumDataObject> SimilarityDataService::getAlbumsBy(const Album& album, QP
     QList<AlbumDataObject> list;
     while (query.next())
     {
-        AlbumDataObject album(query.value(0).toString(), query.value(1).toString(), query.value(2).toInt());
-        album.setPath(query.value(3).toString());
+        QString artist = query.value(0).toString().replace("_", "'");
+        QString title  = query.value(1).toString().replace("_", "'");
+        QString file   = query.value(3).toString().replace("_", "'");
+
+        AlbumDataObject album(artist, title, query.value(2).toInt());
+        album.setPath(file);
         album.addGenreOcurrency(QPair<QString, int>(query.value(3).toString(), query.value(4).toInt()));
         list.append(album);
     }

@@ -76,7 +76,6 @@ void Controller::slotSearch(const QString &query)
     connectStandarActionSignals(_actionSearch.data());
 
     _actionSearch->execute();
-
 }
 
 void Controller::slotSearchFinished(const QStringList &result)

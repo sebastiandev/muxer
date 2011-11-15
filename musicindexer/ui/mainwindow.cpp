@@ -81,18 +81,6 @@ void MainWindow::slotAskForDirectory(QString *dir)
     *dir = QFileDialog::getExistingDirectory(0, "Import folder", QDir::homePath());
 }
 
-void MainWindow::slotShowSearchResult(const QStringList &result)
-{
-    QListWidget *list = new QListWidget();
-
-    list->setGeometry(this->x() - ((400 - this->width())/2), this->y() + this->height() + 50, 400, 400);
-
-    foreach (const QString &item, result)
-        list->addItem(new QListWidgetItem(item));
-
-    list->show();
-}
-
 void MainWindow::slotShowSongs(const QStringList &songList)
 {
     _musicViewer->showSongs(songList);

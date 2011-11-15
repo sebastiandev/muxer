@@ -45,6 +45,7 @@ public:
 
     inline bool operator < (const Album &a) const { return getArtist()+getTitle() < a.getArtist()+a.getTitle();}
     inline bool operator ==(const Album &a) const { return getArtist()+getTitle() == a.getArtist()+a.getTitle();}
+    inline bool operator !=(const Album &a) const { return getArtist()+getTitle() != a.getArtist()+a.getTitle();}
 
 private:
 

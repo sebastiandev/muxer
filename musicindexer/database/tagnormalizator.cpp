@@ -27,23 +27,34 @@ QMap<QString, QString> TagNormalizator::normalizeTags(const QMap<QString, QStrin
     return normalized;
 }
 
-QString TagNormalizator::normalizeGenre(const QString &genre)
+QStringList TagNormalizator::normalizeGenre(const QString &genre)
 {
-    if (genre.isEmpty()) return "";
+    if (genre.isEmpty()) return QStringList();
 
-    QString normalized = GenreSteammer::steam(genre);
-    LoggerManager::LogDebug("[TagNormalizator] genre: " + genre + " --> " + normalized);
+    Genre normalizedGenre;
+    QStringList genres;
 
-    if (GenreManager::manager().hasGenre(normalized))
+    QString normalizedGenreStr = GenreSteammer::steam(genre);
+    LoggerManager::LogDebug("[TagNormalizator] genre: " + genre + " --> " + normalizedGenreStr);
+
+    if (GenreManager::manager().hasGenre(normalizedGenreStr))
     {
-        normalized = GenreManager::manager().getGenre(normalized).getId();
+        normalizedGenre = GenreManager::manager().getGenre(normalizedGenreStr);
+
+        if (GenreManager::manager().isSubGenre(normalizedGenre.getId()))
+        {
+            genres << GenreManager::manager().getParentGenre(normalizedGenre.getId()).getId();
+        }
+
+        normalizedGenreStr = normalizedGenre.getId();
+        genres << normalizedGenreStr;
     }
     else
     {
         QList<QPair<int, QString> > distances;
         foreach (Genre genre, GenreManager::manager().getAllGenres())
         {
-            int d = DistanceCalculator::distance(normalized, genre.getId());
+            int d = DistanceCalculator::distance(normalizedGenreStr, genre.getId());
             distances.push_back( QPair<int, QString>(d, genre.getId()) );
         }
 
@@ -54,12 +65,13 @@ QString TagNormalizator::normalizeGenre(const QString &genre)
 
         if (minDistance <= _distanceSimilarityThreshold)
         {
-            // since we were comparing to every genre, we could have foud a match with a variant of a genre
-            // we must let the manager tell us the corresponding genre to that id
-            normalized = GenreManager::manager().getGenre(genreId).getId();
-            LoggerManager::LogDebug("[TagNormalizator] genre: '" + genre + "' not found in db.\nMin Distance: " +
+            LoggerManager::LogDebug("[TagNormalizator] genre: '" + normalizedGenreStr + "' not found in db.\nMin Distance: " +
                                     QString::number(minDistance) + ", to genre: " + genreId);
 
+            // since we were comparing to every genre, we could have foud a match with a variant of a genre
+            // we must let the manager tell us the corresponding genre to that id
+            normalizedGenreStr = GenreManager::manager().getGenre(genreId).getId();
+            genres << normalizedGenreStr;
         }
         else
         {
@@ -68,7 +80,7 @@ QString TagNormalizator::normalizeGenre(const QString &genre)
         }
     }
 
-    return normalized;
+    return genres;
 }
 
 QString TagNormalizator::normalizeArtist(const QString &artist)
