@@ -3,6 +3,7 @@
 
 #include <QStringList>
 #include <QMetaType>
+#include <QImage>
 
 class Song
 {
@@ -49,15 +50,18 @@ public:
     QStringList getGenres() const { return _genres; }
     int     getBitrate() const { return _bitrate;}
     int     getLength () const { return  _length;}
+    QImage  getCover() const { return _cover;}
 
     void    setBitrate(int val) { _bitrate = val;}
     void    setLength (int val) { _length  = val;}
+    void    setCover (const QImage  &val) { _cover = val;}
 
 private:
 
      QString     _title, _album, _artist, _year , _key, _type;
      QStringList _genres;
      int         _tempo, _bitrate, _length;
+     QImage      _cover;
 
 };
 

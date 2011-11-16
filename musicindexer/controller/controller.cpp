@@ -28,6 +28,9 @@ Controller::Controller(QObject *parent) :
 void Controller::init()
 {
     _mainwindow.reset(new MainWindow());
+
+    QApplication::setApplicationName("Muxer");
+
     _mainwindow->show();
 
     connect(_mainwindow.data(), SIGNAL(searchTrigger(const QString&))        , this, SLOT(slotSearch(const QString&)));

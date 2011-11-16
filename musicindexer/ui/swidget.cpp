@@ -2,13 +2,13 @@
 #include <QGraphicsDropShadowEffect>
 
 SWidget::SWidget(QWidget *parent) :
-    QWidget(parent/*, Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint*/)
+    QWidget(parent, Qt::FramelessWindowHint /*| Qt::WindowStaysOnTopHint*/)
 {
     ui.setupUi(this);
     setAttribute(Qt::WA_TranslucentBackground, true);
 
-    QRegion visibleArea(this->x() + 2, this->y() , this->width() - 4, this->height());
-    setMask(visibleArea);
+    //QRegion visibleArea(this->x() + 2, this->y() , this->width() - 4, this->height());
+    //setMask(visibleArea);
 
     _originalEffect = new QGraphicsDropShadowEffect();
     _originalEffect->setBlurRadius(15);
@@ -38,7 +38,7 @@ SWidget::SWidget(QWidget *parent) :
     connect(ui.btMinimize  , SIGNAL(clicked()), this, SLOT(showMinimized()));
 
     connect(ui.listWidget  , SIGNAL(clicked(QModelIndex)), this, SIGNAL(itemSelected(QModelIndex)));
-    connect(ui.tableWidget , SIGNAL(cellClicked(int,int)), this, SIGNAL(songSelected(int, int)));
+    connect(ui.tableWidget , SIGNAL(cellClicked(int,int)), this, SLOT(slotSongSelected(int, int)));
 }
 
 void SWidget::mousePressEvent(QMouseEvent *event)
@@ -178,6 +178,18 @@ void SWidget::showArtistDetail(const QString &artist, const QList<QPair<QImage, 
 void SWidget::slotAlbumSelected(const QString &album)
 {
     emit albumSelectedFromArtistDetail(ui.listWidget->selectedItems().first()->text(), album);
+}
+
+void SWidget::slotSongSelected(int row, int col)
+{
+    if (col == 0)
+    {
+        QString song   = ui.tableWidget->item(row, 1)->text();
+        QString artist = ui.tableWidget->item(row, 2)->text();
+        QString album  = ui.tableWidget->item(row, 3)->text();
+
+        emit songSelected(artist, album, song);
+    }
 }
 
 void SWidget::restoreView()

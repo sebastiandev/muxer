@@ -6,6 +6,8 @@
 #include "similarityview.h"
 #include "swidget.h"
 #include "similarity.h"
+#include "entities/song.h"
+
 
 class MusicViewer : public QObject
 {
@@ -23,7 +25,11 @@ public:
 
 signals:
 
+    void playSong(const Song&, const QString&);
+
 public slots:
+
+    void close();
 
 private slots:
 
@@ -37,6 +43,7 @@ private slots:
     void slotGetAlbumSimilarity  (const QString &artist, const QString &album);
     void loadArtistForSimilarity ();
     void loadAlbumForSimilarity  ();
+    void slotGetSongDataAndPlay  (const QString &artist, const QString &album, const QString &song);
 
 
 
@@ -44,8 +51,7 @@ private:
 
     enum type{SONG, ALBUM, ARTIST, GENRE};
 
-    SWidget *_collectionView;
-    //SimilarityView *_similarityView;
+    SWidget    *_collectionView;
     Similarity *_similarityView;
 
     QStringList     _currentSongs;

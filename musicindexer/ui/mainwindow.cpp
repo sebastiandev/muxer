@@ -6,6 +6,7 @@
 #include <QDebug>
 #include <QListWidget>
 #include <QDesktopWidget>
+#include <QPropertyAnimation>
 
 MainWindow::MainWindow(QWidget *parent) :
     QWidget(parent, Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint)
@@ -30,14 +31,15 @@ MainWindow::MainWindow(QWidget *parent) :
     ui.wContainer->setGraphicsEffect(effect);
 
     _musicViewer = new MusicViewer(this);
+    _player = NULL;
 
     connect(this->ui.leInput     , SIGNAL(textChanged(QString)), this, SLOT(highlightInput()));
     connect(this->ui.btAdd       , SIGNAL(clicked()), this, SIGNAL(addResourcesTrigger()));
     connect(this->ui.btCollection, SIGNAL(clicked()), this, SIGNAL(getCollectionTrigger()));
     connect(this->ui.btSimilarity, SIGNAL(clicked()), this, SIGNAL(showSimilarityTrigger()));
     connect(this->ui.btSearch    , SIGNAL(clicked()), this, SLOT(searchClicked()));
-    connect(this->ui.btClose     , SIGNAL(clicked()), this, SLOT(close()));
-
+    connect(this->ui.btClose     , SIGNAL(clicked()), this, SLOT(slotClose()));
+    connect(_musicViewer, SIGNAL(playSong(const Song&, const QString&)), this, SLOT(slotPlaySongRequested(const Song&, const QString&)));
 }
 
 void MainWindow::highlightInput()
@@ -89,4 +91,29 @@ void MainWindow::slotShowSongs(const QStringList &songList)
 void MainWindow::slotShowSimilarity(const QStringList &songlist)
 {
     _musicViewer->showSimilarityScreen(songlist);
+}
+
+void MainWindow::slotPlaySongRequested(const Song &song, const QString &songFile)
+{
+    if (_player == NULL)
+    {
+        _player = new CompactPlayer();
+        ui.wExpandMenu->layout()->addWidget(_player);
+
+        _player->show();
+        QPropertyAnimation *animation = new QPropertyAnimation(this, "geometry");
+        animation->setDuration(300);
+        animation->setStartValue(QRect(this->x(), this->y(), this->width(), this->height()));
+        animation->setEndValue(QRect(this->x()-200, this->y(), this->width() + 200, this->height()));
+        animation->setEasingCurve(QEasingCurve::OutQuart);
+        animation->start();
+    }
+
+    _player->playSong(songFile);
+}
+
+void MainWindow::slotClose()
+{
+    _musicViewer->close();
+    close();
 }
