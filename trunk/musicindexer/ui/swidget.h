@@ -38,7 +38,7 @@ public:
 signals:
 
     void itemSelected(QModelIndex);
-    void songSelected(int, int);
+    void songSelected(const QString&, const QString&, const QString&);
     void SongViewSelected();
     void ArtistViewSelected();
     void AlbumViewSelected();
@@ -49,6 +49,7 @@ private slots:
 
     void slotAlbumSelected(const QString &album);
     void restoreView();
+    void slotSongSelected(int row, int col);
 
 private:
 

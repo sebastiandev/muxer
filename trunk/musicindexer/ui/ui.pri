@@ -1,4 +1,4 @@
-QT      += gui
+QT      += gui phonon
 
 INCLUDEPATH += ../
 
@@ -10,7 +10,8 @@ HEADERS += \
     ui/similarityview.h \
     ui/swidget.h \
     ui/similarity.h \
-    ui/albuminfo.h
+    ui/albuminfo.h \
+    ui/compactplayer.h
 
 
 
@@ -23,7 +24,8 @@ SOURCES += \
     ui/similarityview.cpp \
     ui/swidget.cpp \
     ui/similarity.cpp \
-    ui/albuminfo.cpp
+    ui/albuminfo.cpp \
+    ui/compactplayer.cpp
 
 
 
@@ -34,7 +36,8 @@ FORMS += \
     ui/similarityview.ui \
     ui/swidget.ui \
     ui/similarity.ui \
-    ui/albuminfo.ui
+    ui/albuminfo.ui \
+    ui/compactplayer.ui
 
 
 RESOURCES += \
@@ -43,6 +46,9 @@ RESOURCES += \
 OTHER_FILES += \
     resources/genres.xml \
     resources/config.conf
+
+
+
 
 
 

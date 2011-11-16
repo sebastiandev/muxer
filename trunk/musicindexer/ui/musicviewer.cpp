@@ -41,6 +41,7 @@ void MusicViewer::showSongs(const QStringList &songs)
         }
 
         connect(_collectionView, SIGNAL(itemSelected(QModelIndex)), this, SLOT(showItemDetail(QModelIndex)));
+        connect(_collectionView, SIGNAL(songSelected(const QString&, const QString&, const QString&)), this, SLOT(slotGetSongDataAndPlay(const QString&, const QString&, const QString&)));
         connect(_collectionView, SIGNAL(SongViewSelected())  , this, SLOT(changeToSongView()));
         //connect(_collectionView, SIGNAL(AlbumViewSelected()) , this, SLOT(changeToAlbumView()));
         connect(_collectionView, SIGNAL(ArtistViewSelected()), this, SLOT(changeToArtistView()));
@@ -228,4 +229,20 @@ void MusicViewer::slotGetAlbumSimilarity(const QString &artist, const QString &a
         similar.append(QPair<QImage, QString>(a.getCover(), a.getArtist()+" - "+a.getTitle()));
 
     _similarityView->setSimilar(similar);
+}
+
+void MusicViewer::slotGetSongDataAndPlay(const QString &artist, const QString &album, const QString &song)
+{
+    QPair<Song, QString> songFile = EntitiesUtil::getSongAndFileFromSongList(_currentSongs, artist, album, song);
+
+    emit playSong(songFile.first, songFile.second);
+}
+
+void MusicViewer::close()
+{
+    if (_similarityView)
+        _similarityView->close();
+
+    if (_collectionView)
+        _collectionView->close();
 }
