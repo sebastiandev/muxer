@@ -26,5 +26,7 @@
         <file>icons/search_64.png</file>
         <file>icons/search_96.png</file>
         <file>icons/cd_real_96.png</file>
+        <file>icons/remove.png</file>
+        <file>icons/playlist.png</file>
     </qresource>
 </RCC>
