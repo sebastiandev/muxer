@@ -9,6 +9,9 @@
 #include <phonon/volumeslider.h>
 #include <phonon/backendcapabilities.h>
 #include <QLCDNumber>
+#include <QPushButton>
+
+#include "compactplaylist.h"
 
 namespace Ui {
     class CompactPlayer;
@@ -22,15 +25,23 @@ public:
     explicit CompactPlayer(QWidget *parent = 0);
     ~CompactPlayer();
 
+
+    void updatePosition(QPoint pos);
+
 public slots:
 
-    void playSong(const QString& songFile);
+    void addSong     (const Song &song, const QString &songFile);
+    void playSong    (const Song &song, const QString &songFile);
+    int  songsInQueue();
+    void close();
+
 
 private slots:
 
     void tick(qint64 time);
     void sourceChanged(const Phonon::MediaSource &source);
-
+    void aboutToFinish();
+    void tooglePlaylist();
 
 private:
     Ui::CompactPlayer *ui;
@@ -46,6 +57,9 @@ private:
     QAction *_playAction;
     QAction *_pauseAction;
     QAction *_stopAction;
+
+    QPushButton     *_btPlaylist;
+    CompactPlaylist *_playlist;
 
 };
 

@@ -11,7 +11,8 @@ HEADERS += \
     ui/swidget.h \
     ui/similarity.h \
     ui/albuminfo.h \
-    ui/compactplayer.h
+    ui/compactplayer.h \
+    ui/compactplaylist.h
 
 
 
@@ -25,7 +26,8 @@ SOURCES += \
     ui/swidget.cpp \
     ui/similarity.cpp \
     ui/albuminfo.cpp \
-    ui/compactplayer.cpp
+    ui/compactplayer.cpp \
+    ui/compactplaylist.cpp
 
 
 
@@ -37,7 +39,8 @@ FORMS += \
     ui/swidget.ui \
     ui/similarity.ui \
     ui/albuminfo.ui \
-    ui/compactplayer.ui
+    ui/compactplayer.ui \
+    ui/compactplaylist.ui
 
 
 RESOURCES += \
@@ -46,6 +49,9 @@ RESOURCES += \
 OTHER_FILES += \
     resources/genres.xml \
     resources/config.conf
+
+
+
 
 
 

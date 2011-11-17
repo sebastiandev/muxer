@@ -10,16 +10,21 @@ CompactPlayer::CompactPlayer(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    _playlist = new CompactPlaylist();
+    _playlist->hide();
+
     _audioOutput = new Phonon::AudioOutput(Phonon::MusicCategory, this);
     _mediaObject = new Phonon::MediaObject(this);
     _metaInformationResolver = new Phonon::MediaObject(this);
 
     _mediaObject->setTickInterval(1000);
 
+    connect(_playlist, SIGNAL(playSong(Song,QString)), this, SLOT(playSong(Song,QString)));
+
     connect(_mediaObject, SIGNAL(tick(qint64))                             , this, SLOT(tick(qint64)));
     //connect(_mediaObject, SIGNAL(stateChanged(Phonon::State,Phonon::State)), this, SLOT(stateChanged(Phonon::State,Phonon::State)));
     connect(_mediaObject, SIGNAL(currentSourceChanged(Phonon::MediaSource)), this, SLOT(sourceChanged(Phonon::MediaSource)));
-    //connect(_mediaObject, SIGNAL(aboutToFinish())                          , this, SLOT(aboutToFinish()));
+    connect(_mediaObject, SIGNAL(aboutToFinish())                          , this, SLOT(aboutToFinish()));
     //connect(_metaInformationResolver, SIGNAL(stateChanged(Phonon::State,Phonon::State)), this, SLOT(metaStateChanged(Phonon::State,Phonon::State)));
 
     Phonon::createPath(_mediaObject, _audioOutput);
@@ -35,10 +40,6 @@ CompactPlayer::CompactPlayer(QWidget *parent) :
     _stopAction = new QAction(style()->standardIcon(QStyle::SP_MediaStop), tr("Stop"), this);
     _stopAction->setShortcut(tr("Ctrl+S"));
     _stopAction->setDisabled(false);
-
-    connect(_playAction , SIGNAL(triggered()), _mediaObject, SLOT(play()));
-    connect(_pauseAction, SIGNAL(triggered()), _mediaObject, SLOT(pause()) );
-    connect(_stopAction , SIGNAL(triggered()), _mediaObject, SLOT(stop()));
 
     QToolBar *bar = new QToolBar;
 
@@ -75,12 +76,29 @@ CompactPlayer::CompactPlayer(QWidget *parent) :
     _timeLcd->setPalette(palette);
     _timeLcd->setStyleSheet("border: 0px solid grey; border-radius: 4px; ");
 
+    _btPlaylist = new QPushButton();
+    _playlist->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Expanding);
+    _btPlaylist->setStyleSheet("QPushButton { "
+                                 "image: url(:/icons/icons/playlist.png); "
+                                 "margin-right: 3px; border: 0px solid grey;"
+                                 "border-top-right-radius: 4px; "
+                                 "border-bottom-right-radius: 4px; "
+                                 "background-color: transparent;}"
+
+                                 "QPushButton::hover{ background-color: white}");
+
     ui->wSlide->layout()->addWidget(_seekSlider);
     ui->wSlide->layout()->addWidget(_timeLcd);
     ui->wSlide->layout()->addWidget(volumeLabel);
     ui->wSlide->layout()->addWidget(_volumeSlider);
+    ui->wSlide->layout()->addWidget(_btPlaylist);
 
     ui->wPlayback->layout()->addWidget(bar);
+
+    connect(_playAction , SIGNAL(triggered()), _mediaObject, SLOT(play()));
+    connect(_pauseAction, SIGNAL(triggered()), _mediaObject, SLOT(pause()) );
+    connect(_stopAction , SIGNAL(triggered()), _mediaObject, SLOT(stop()));
+    connect(_btPlaylist,  SIGNAL(clicked()) ,  this, SLOT(tooglePlaylist()));
 }
 
 CompactPlayer::~CompactPlayer()
@@ -88,7 +106,24 @@ CompactPlayer::~CompactPlayer()
     delete ui;
 }
 
-void CompactPlayer::playSong(const QString& songFile)
+void CompactPlayer::tooglePlaylist()
+{
+    if (_playlist->isVisible())
+        _playlist->hide();
+    else
+    {
+        QPoint globalPos = this->mapToGlobal(this->pos());
+        _playlist->setGeometry(globalPos.x(), globalPos.y() + this->geometry().height() - 5, this->width(), 200);
+        _playlist->show();
+    }
+}
+
+void CompactPlayer::addSong(const Song &song, const QString &songFile)
+{
+    _playlist->addSong(song, songFile);
+}
+
+void CompactPlayer::playSong(const Song &song, const QString& songFile)
 {
     _mediaObject->stop();
     _mediaObject->clearQueue();
@@ -96,6 +131,19 @@ void CompactPlayer::playSong(const QString& songFile)
     Phonon::MediaSource source(songFile);
     _mediaObject->setCurrentSource(source);
     _mediaObject->play();
+
+    if (!_playlist->contains(song))
+        _playlist->addSong(song, songFile);
+}
+
+int CompactPlayer::songsInQueue()
+{
+    return (_playlist->size() - _playlist->currentSong());
+}
+
+void CompactPlayer::aboutToFinish()
+{
+    _playlist->nextSong();
 }
 
 void CompactPlayer::tick(qint64 time)
@@ -108,4 +156,20 @@ void CompactPlayer::sourceChanged(const Phonon::MediaSource &source)
 {
     //musicTable->selectRow(sources.indexOf(source));
     _timeLcd->display("00:00");
+}
+
+void CompactPlayer::updatePosition(QPoint pos)
+{
+    if (_playlist->isVisible())
+    {
+        QPoint globalPos = this->mapToGlobal(this->pos());
+        _playlist->move(globalPos.x(), globalPos.y() + this->geometry().height() - 5);
+    }
+}
+
+void CompactPlayer::close()
+{
+    _mediaObject->clearQueue();
+    _mediaObject->stop();
+    _playlist->close();
 }

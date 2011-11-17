@@ -59,6 +59,9 @@ void MainWindow::mouseMoveEvent(QMouseEvent *event)
 {
     if (event->buttons() & Qt::LeftButton) {
         move(event->globalPos() - m_dragPosition);
+        if (_player)
+            _player->updatePosition(event->globalPos() - m_dragPosition);
+
         event->accept();
     }
 }
@@ -109,11 +112,18 @@ void MainWindow::slotPlaySongRequested(const Song &song, const QString &songFile
         animation->start();
     }
 
-    _player->playSong(songFile);
+    if (_player->songsInQueue() == 0)
+        _player->playSong(song, songFile);
+    else
+        _player->addSong(song, songFile);
 }
 
 void MainWindow::slotClose()
 {
     _musicViewer->close();
+
+    if (_player)
+        _player->close();
+
     close();
 }
