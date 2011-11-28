@@ -132,13 +132,19 @@ void CompactPlayer::playSong(const Song &song, const QString& songFile)
     _mediaObject->setCurrentSource(source);
     _mediaObject->play();
 
+    // a new song is played, then add it to playlist and update current song on the playlist
     if (!_playlist->contains(song))
+    {
         _playlist->addSong(song, songFile);
+        _playlist->setCurrentSong(_playlist->size());
+    }
 }
 
 int CompactPlayer::songsInQueue()
 {
-    return (_playlist->size() - _playlist->currentSong());
+    // if a song is been played we consider the song to be in the queue
+    int putPLayingAsQueue = _mediaObject->state() == Phonon::PlayingState ? 1 : 0;
+    return (_playlist->size() - _playlist->currentSong() + putPLayingAsQueue);
 }
 
 void CompactPlayer::aboutToFinish()

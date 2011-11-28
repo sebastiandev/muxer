@@ -64,12 +64,12 @@ void CompactPlaylist::slotSongSelected(int row, int col)
 
 int CompactPlaylist::currentSong()
 {
-    return _currentSong;
+    return _currentSong+1;//because the index starts on 0
 }
 
 void CompactPlaylist::nextSong()
 {
-    if (_currentSong < _playlist.size()-1)
+    if (_currentSong < _playlist.size()-1)//because the _currentSong index starts on 0
     {
         _currentSong++;
         QString key = ui->tableWidget->item(_currentSong, 1)->text() + ui->tableWidget->item(_currentSong, 2)->text() + ui->tableWidget->item(_currentSong, 0)->text();

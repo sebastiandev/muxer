@@ -50,11 +50,14 @@ void MusicViewer::showSongs(const QStringList &songs)
     }
 
     _collectionView->clear();
-    _collectionView->showArtistView();
 
     foreach (const Artist &a, EntitiesUtil::getArtistsFromSongs(_currentSongs))
         _collectionView->addArtist(a.getName());
 
+    if (_currentSongs.size() < 15)
+        changeToSongView();
+    else
+        _collectionView->showArtistView();
 }
 
 void MusicViewer::changeToArtistView()

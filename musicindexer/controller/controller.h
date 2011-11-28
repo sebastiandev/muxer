@@ -21,10 +21,14 @@ signals:
     void showSearchResult(const QStringList&);
     void showSimilarity  (const QStringList&);
     void showCollection  (const QStringList&);
+    void showProgress    ();
+    void updateProgress  (int);
+    void hideProgress    ();
+
 
 public slots:
 
-    void slotActionStarted();
+    void slotImportStarted();
     void slotActionProgress(int);
     void slotActionError(const QString &);
     void slotActionEnded(bool);

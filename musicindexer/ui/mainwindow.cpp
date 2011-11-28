@@ -23,6 +23,9 @@ MainWindow::MainWindow(QWidget *parent) :
     */
     move(QApplication::desktop()->availableGeometry().width()/2 - this->width()/2, 100);
 
+    ui.widget_3->hide();
+    resize(730, 50);
+
     QGraphicsDropShadowEffect *effect = new QGraphicsDropShadowEffect();
     effect->setBlurRadius(15);
     effect->setXOffset(-0.0);
@@ -46,6 +49,37 @@ void MainWindow::highlightInput()
 {
 
 }
+
+void MainWindow::slotShowProgress()
+{
+    QPropertyAnimation *animation = new QPropertyAnimation(this, "geometry");
+    animation->setDuration(300);
+    animation->setStartValue(QRect(this->x(), this->y(), this->width(), this->height()));
+    animation->setEndValue(QRect(this->x(), this->y(), this->width(), this->height() + 20));
+    animation->setEasingCurve(QEasingCurve::OutQuart);
+    animation->start();
+
+    ui.widget_3->show();
+}
+
+void MainWindow::slotUpdateProgress(int progress)
+{
+    ui.progressBar->setValue(progress);
+    ui.progressBar->repaint();
+}
+
+void MainWindow::slotHideProgress()
+{
+    QPropertyAnimation *animation = new QPropertyAnimation(this, "geometry");
+    animation->setDuration(300);
+    animation->setStartValue(QRect(this->x(), this->y(), this->width(), this->height()));
+    animation->setEndValue(QRect(this->x(), this->y(), this->width(), this->height() - 24));
+    animation->setEasingCurve(QEasingCurve::OutQuart);
+    animation->start();
+
+    ui.widget_3->hide();
+}
+
 
 void MainWindow::mousePressEvent(QMouseEvent *event)
 {

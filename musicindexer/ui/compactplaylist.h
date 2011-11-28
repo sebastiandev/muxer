@@ -20,7 +20,8 @@ public:
     ~CompactPlaylist();
 
     void addSong   (const Song &song, const QString &file);
-    int currentSong();
+    void setCurrentSong(int pos) { _currentSong = pos-1;}//because the index starts on 0
+    int  currentSong();
     void nextSong  ();
 
     bool contains(const Song &song);

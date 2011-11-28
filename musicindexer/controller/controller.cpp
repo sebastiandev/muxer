@@ -42,24 +42,29 @@ void Controller::init()
     connect(this              , SIGNAL(showCollection  (const QStringList&)), _mainwindow.data(), SLOT(slotShowSongs(const QStringList&)));
     connect(this              , SIGNAL(showSimilarity  (const QStringList&)), _mainwindow.data(), SLOT(slotShowSimilarity(const QStringList&)));
 
+    connect(this              , SIGNAL(showProgress())                      , _mainwindow.data(), SLOT(slotShowProgress()));
+    connect(this              , SIGNAL(updateProgress(int))                 , _mainwindow.data(), SLOT(slotUpdateProgress(int)));
+    connect(this              , SIGNAL(hideProgress())                      , _mainwindow.data(), SLOT(slotHideProgress()));
+
     connect(this, SIGNAL(askForDirectory(QString*)), _mainwindow.data(), SLOT(slotAskForDirectory(QString*)));
 }
 
 void Controller::connectStandarActionSignals(MBAction * action)
 {
-    connect(action, SIGNAL(actionStarted())             , this , SLOT(slotActionStarted()));
+    //connect(action, SIGNAL(actionStarted())             , this , SLOT(slotActionStarted()));
     connect(action, SIGNAL(actionProgress(int))         , this , SLOT(slotActionProgress(int)));
     connect(action, SIGNAL(actionError(const QString &)), this , SLOT(slotActionError(const QString &)));
     connect(action, SIGNAL(actionEnded(bool))           , this , SLOT(slotActionEnded(bool)));
 }
 
-void Controller::slotActionStarted()
+void Controller::slotImportStarted()
 {
-
+    emit showProgress();
 }
 
-void Controller::slotActionProgress(int)
+void Controller::slotActionProgress(int progress)
 {
+    emit updateProgress(progress);
 }
 
 void Controller::slotActionError(const QString &)
@@ -68,6 +73,7 @@ void Controller::slotActionError(const QString &)
 
 void Controller::slotActionEnded(bool)
 {
+    emit hideProgress();
 }
 
 
@@ -97,6 +103,8 @@ void Controller::slotAddResources()
         return;
 
     _actionImport.reset(new ActionImport(QDir(directory)));
+
+    connect(_actionImport.data(), SIGNAL(actionStarted()) , this , SLOT(slotImportStarted()));
 
     connectStandarActionSignals(_actionImport.data());
 

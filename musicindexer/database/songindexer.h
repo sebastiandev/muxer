@@ -15,8 +15,10 @@ public:
     SongIndexer(){}
     SongIndexer(Xapian::WritableDatabase &database, QStringList stopWords=QStringList());
 
-    void setDataBase(Xapian::WritableDatabase &database);
-    void index      (const QString &path, const Song &song);
+    void setDataBase (Xapian::WritableDatabase &database);
+    void setStopWords(const QStringList &stopwords){ _stopwords = stopwords;}
+
+    void index       (const QString &path, const Song &song);
 
 private:
 

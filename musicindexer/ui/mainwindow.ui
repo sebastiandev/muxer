@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>721</width>
-    <height>54</height>
+    <width>730</width>
+    <height>74</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -25,6 +25,12 @@
    </property>
    <item>
     <widget class="QWidget" name="wContainer" native="true">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="styleSheet">
       <string notr="true">#wContainer{
 	background-color:rgba(204, 204, 204, 227);
@@ -32,71 +38,17 @@
 	border: 1px solid grey;
 }</string>
      </property>
-     <layout class="QHBoxLayout" name="horizontalLayout_3">
+     <layout class="QVBoxLayout" name="verticalLayout_3">
       <property name="spacing">
        <number>0</number>
       </property>
-      <property name="leftMargin">
-       <number>15</number>
-      </property>
-      <property name="topMargin">
-       <number>2</number>
-      </property>
-      <property name="rightMargin">
-       <number>2</number>
-      </property>
-      <property name="bottomMargin">
-       <number>2</number>
+      <property name="margin">
+       <number>0</number>
       </property>
       <item>
-       <widget class="QWidget" name="wExpandMenu" native="true">
+       <widget class="QWidget" name="widget_2" native="true">
         <property name="sizePolicy">
-         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">#wExpandMenu {
-	border: 0px solid grey;
-	background-color: transparent;
-	border-top-left-radius: 15px;
-	border-bottom-left-radius: 15px;
-}</string>
-        </property>
-        <layout class="QHBoxLayout" name="horizontalLayout_6">
-         <property name="spacing">
-          <number>0</number>
-         </property>
-         <property name="sizeConstraint">
-          <enum>QLayout::SetMaximumSize</enum>
-         </property>
-         <property name="margin">
-          <number>0</number>
-         </property>
-        </layout>
-       </widget>
-      </item>
-      <item>
-       <spacer name="horizontalSpacer">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeType">
-         <enum>QSizePolicy::Minimum</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item>
-       <widget class="QWidget" name="wMainMenu" native="true">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
@@ -104,199 +56,33 @@
         <property name="minimumSize">
          <size>
           <width>0</width>
-          <height>0</height>
+          <height>35</height>
          </size>
         </property>
-        <property name="styleSheet">
-         <string notr="true">#wMainMenu {
-	border: 0px solid grey;
-	background-color: transparent;
-}</string>
-        </property>
-        <layout class="QHBoxLayout" name="horizontalLayout_2">
-         <property name="spacing">
-          <number>0</number>
-         </property>
-         <property name="leftMargin">
-          <number>0</number>
-         </property>
-         <property name="topMargin">
-          <number>2</number>
-         </property>
-         <property name="rightMargin">
-          <number>0</number>
-         </property>
-         <property name="bottomMargin">
-          <number>2</number>
-         </property>
-         <item>
-          <widget class="QPushButton" name="btAdd">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="minimumSize">
-            <size>
-             <width>40</width>
-             <height>0</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>16777215</width>
-             <height>16777215</height>
-            </size>
-           </property>
-           <property name="font">
-            <font>
-             <pointsize>8</pointsize>
-            </font>
-           </property>
-           <property name="contextMenuPolicy">
-            <enum>Qt::NoContextMenu</enum>
-           </property>
-           <property name="toolTip">
-            <string>import</string>
-           </property>
-           <property name="layoutDirection">
-            <enum>Qt::LeftToRight</enum>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">#btAdd {
-	border: 0px;
-	background-color: transparent;
-	image: url(:/icons/icons/import.png);
-}
-#btAdd::hover{ background-color: rgba(188, 233, 255, 224);}</string>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-           <property name="iconSize">
-            <size>
-             <width>0</width>
-             <height>0</height>
-            </size>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="btCollection">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="minimumSize">
-            <size>
-             <width>40</width>
-             <height>0</height>
-            </size>
-           </property>
-           <property name="toolTip">
-            <string>music collection</string>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">#btCollection {
-	border: 0px;
-	background-color: transparent;
-	image: url(:/icons/icons/collection.png);
-}
-
-#btCollection::hover{ background-color: rgba(188, 233, 255, 224);}</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="btSimilarity">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="minimumSize">
-            <size>
-             <width>40</width>
-             <height>0</height>
-            </size>
-           </property>
-           <property name="toolTip">
-            <string>similarity</string>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">#btSimilarity{
-	border: 0px;
-	background-color: transparent;
-	image: url(:/icons/icons/similarity.png);
-}
-
-#btSimilarity::hover{ background-color: rgba(188, 233, 255, 224);}</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </widget>
-      </item>
-      <item>
-       <spacer name="horizontalSpacer_2">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeType">
-         <enum>QSizePolicy::Minimum</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
+        <property name="maximumSize">
          <size>
-          <width>40</width>
-          <height>20</height>
+          <width>16777215</width>
+          <height>35</height>
          </size>
         </property>
-       </spacer>
-      </item>
-      <item>
-       <widget class="QWidget" name="wSearch" native="true">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">#wSearch {
-	background-color: transparent;
-	border: 0px solid grey;
-}
-
-QToolButton{
-background-color: transparent;
-border: 0px;
-color: white;
-}
-
-QToolButton::hover{ color: black;}</string>
-        </property>
-        <layout class="QHBoxLayout" name="horizontalLayout">
+        <layout class="QHBoxLayout" name="horizontalLayout_3">
          <property name="spacing">
           <number>0</number>
          </property>
          <property name="leftMargin">
-          <number>0</number>
+          <number>15</number>
          </property>
          <property name="topMargin">
           <number>2</number>
          </property>
          <property name="rightMargin">
-          <number>0</number>
+          <number>2</number>
          </property>
          <property name="bottomMargin">
           <number>2</number>
          </property>
          <item>
-          <widget class="QWidget" name="widget" native="true">
+          <widget class="QWidget" name="wExpandMenu" native="true">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
              <horstretch>0</horstretch>
@@ -304,38 +90,89 @@ QToolButton::hover{ color: black;}</string>
             </sizepolicy>
            </property>
            <property name="styleSheet">
-            <string notr="true">#widget {
-	border: 0.5 solid grey;
-	border-radius: 13;
-	background: white;
-}
-
-#widget:focus{ background-color: rgb(211, 236, 243);}</string>
+            <string notr="true">#wExpandMenu {
+	border: 0px solid grey;
+	background-color: transparent;
+	border-top-left-radius: 15px;
+	border-bottom-left-radius: 15px;
+}</string>
            </property>
-           <layout class="QHBoxLayout" name="horizontalLayout_4">
+           <layout class="QHBoxLayout" name="horizontalLayout_6">
             <property name="spacing">
              <number>0</number>
             </property>
-            <property name="topMargin">
+            <property name="sizeConstraint">
+             <enum>QLayout::SetMaximumSize</enum>
+            </property>
+            <property name="margin">
              <number>0</number>
+            </property>
+           </layout>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeType">
+            <enum>QSizePolicy::Minimum</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QWidget" name="wMainMenu" native="true">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">#wMainMenu {
+	border: 0px solid grey;
+	background-color: transparent;
+}</string>
+           </property>
+           <layout class="QHBoxLayout" name="horizontalLayout_2">
+            <property name="spacing">
+             <number>0</number>
+            </property>
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>2</number>
             </property>
             <property name="rightMargin">
              <number>0</number>
             </property>
             <property name="bottomMargin">
-             <number>0</number>
+             <number>2</number>
             </property>
             <item>
-             <widget class="QLineEdit" name="leInput">
+             <widget class="QPushButton" name="btAdd">
               <property name="sizePolicy">
-               <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+               <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
               </property>
               <property name="minimumSize">
                <size>
-                <width>350</width>
+                <width>40</width>
                 <height>0</height>
                </size>
               </property>
@@ -347,14 +184,210 @@ QToolButton::hover{ color: black;}</string>
               </property>
               <property name="font">
                <font>
-                <pointsize>12</pointsize>
-                <weight>50</weight>
-                <bold>false</bold>
-                <strikeout>false</strikeout>
+                <pointsize>8</pointsize>
                </font>
               </property>
+              <property name="contextMenuPolicy">
+               <enum>Qt::NoContextMenu</enum>
+              </property>
+              <property name="toolTip">
+               <string>import</string>
+              </property>
+              <property name="layoutDirection">
+               <enum>Qt::LeftToRight</enum>
+              </property>
               <property name="styleSheet">
-               <string notr="true">#leInput {
+               <string notr="true">#btAdd {
+	border: 0px;
+	background-color: transparent;
+	image: url(:/icons/icons/import.png);
+}
+#btAdd::hover{ background-color: rgba(188, 233, 255, 224);}</string>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>0</width>
+                <height>0</height>
+               </size>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="btCollection">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>40</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="toolTip">
+               <string>music collection</string>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">#btCollection {
+	border: 0px;
+	background-color: transparent;
+	image: url(:/icons/icons/collection.png);
+}
+
+#btCollection::hover{ background-color: rgba(188, 233, 255, 224);}</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="btSimilarity">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>40</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="toolTip">
+               <string>similarity</string>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">#btSimilarity{
+	border: 0px;
+	background-color: transparent;
+	image: url(:/icons/icons/similarity.png);
+}
+
+#btSimilarity::hover{ background-color: rgba(188, 233, 255, 224);}</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer_2">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeType">
+            <enum>QSizePolicy::Minimum</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QWidget" name="wSearch" native="true">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">#wSearch {
+	background-color: transparent;
+	border: 0px solid grey;
+}
+
+QToolButton{
+background-color: transparent;
+border: 0px;
+color: white;
+}
+
+QToolButton::hover{ color: black;}</string>
+           </property>
+           <layout class="QHBoxLayout" name="horizontalLayout">
+            <property name="spacing">
+             <number>0</number>
+            </property>
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>2</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>2</number>
+            </property>
+            <item>
+             <widget class="QWidget" name="widget" native="true">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">#widget {
+	border: 0.5 solid grey;
+	border-radius: 13;
+	background: white;
+}
+
+#widget:focus{ background-color: rgb(211, 236, 243);}</string>
+              </property>
+              <layout class="QHBoxLayout" name="horizontalLayout_4">
+               <property name="spacing">
+                <number>0</number>
+               </property>
+               <property name="topMargin">
+                <number>0</number>
+               </property>
+               <property name="rightMargin">
+                <number>0</number>
+               </property>
+               <property name="bottomMargin">
+                <number>0</number>
+               </property>
+               <item>
+                <widget class="QLineEdit" name="leInput">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>350</width>
+                   <height>0</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>16777215</width>
+                   <height>16777215</height>
+                  </size>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <pointsize>12</pointsize>
+                   <weight>50</weight>
+                   <bold>false</bold>
+                   <strikeout>false</strikeout>
+                  </font>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">#leInput {
 	border: 0px solid grey;
 	border-top-left-radius: 10;
 	border-bottom-left-radius: 10;
@@ -363,37 +396,104 @@ QToolButton::hover{ color: black;}</string>
 }
 
 </string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="btSearch">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="layoutDirection">
-               <enum>Qt::LeftToRight</enum>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">#btSearch {
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="btSearch">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="layoutDirection">
+                  <enum>Qt::LeftToRight</enum>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">#btSearch {
 	border: 1px solid grey;
 	border-top-right-radius: 13;
 	border-bottom-right-radius: 13;
 	image: url(:/icons/icons/search_64.png);
 	background-color: rgb(234, 234, 234);
 }</string>
+                 </property>
+                 <property name="text">
+                  <string/>
+                 </property>
+                 <property name="shortcut">
+                  <string>Return</string>
+                 </property>
+                 <property name="flat">
+                  <bool>false</bool>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer_3">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeType">
+            <enum>QSizePolicy::Minimum</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>30</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QWidget" name="wWindowMenu" native="true">
+           <property name="styleSheet">
+            <string notr="true">#wWindowMenu {
+	border: 0px solid grey;
+	border-top-right-radius: 15;
+	border-bottom-right-radius: 15;
+	background-color: transparent;
+}</string>
+           </property>
+           <layout class="QVBoxLayout" name="verticalLayout">
+            <property name="spacing">
+             <number>0</number>
+            </property>
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>5</number>
+            </property>
+            <property name="rightMargin">
+             <number>1</number>
+            </property>
+            <property name="bottomMargin">
+             <number>5</number>
+            </property>
+            <item>
+             <widget class="QPushButton" name="btClose">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
               </property>
-              <property name="text">
-               <string/>
-              </property>
-              <property name="shortcut">
-               <string>Return</string>
-              </property>
-              <property name="flat">
-               <bool>false</bool>
+              <property name="styleSheet">
+               <string notr="true">#btClose {
+	border: 0px solid grey;
+	background-color: transparent;
+	image: url(:/icons/icons/close.png);
+}
+
+#btClose::hover{ image: url(:/icons/icons/close_on.png);}</string>
               </property>
              </widget>
             </item>
@@ -404,63 +504,42 @@ QToolButton::hover{ color: black;}</string>
        </widget>
       </item>
       <item>
-       <spacer name="horizontalSpacer_3">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
+       <widget class="QWidget" name="widget_3" native="true">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
         </property>
-        <property name="sizeType">
-         <enum>QSizePolicy::Minimum</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
+        <property name="maximumSize">
          <size>
-          <width>30</width>
+          <width>16777215</width>
           <height>20</height>
          </size>
         </property>
-       </spacer>
-      </item>
-      <item>
-       <widget class="QWidget" name="wWindowMenu" native="true">
-        <property name="styleSheet">
-         <string notr="true">#wWindowMenu {
-	border: 0px solid grey;
-	border-top-right-radius: 15;
-	border-bottom-right-radius: 15;
-	background-color: transparent;
-}</string>
-        </property>
-        <layout class="QVBoxLayout" name="verticalLayout">
+        <layout class="QHBoxLayout" name="horizontalLayout_5">
          <property name="spacing">
           <number>0</number>
          </property>
          <property name="leftMargin">
-          <number>0</number>
+          <number>20</number>
          </property>
          <property name="topMargin">
-          <number>5</number>
+          <number>0</number>
          </property>
          <property name="rightMargin">
-          <number>1</number>
+          <number>20</number>
          </property>
          <property name="bottomMargin">
           <number>5</number>
          </property>
          <item>
-          <widget class="QPushButton" name="btClose">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
+          <widget class="QProgressBar" name="progressBar">
+           <property name="value">
+            <number>0</number>
            </property>
-           <property name="styleSheet">
-            <string notr="true">#btClose {
-	border: 0px solid grey;
-	background-color: transparent;
-	image: url(:/icons/icons/close.png);
-}
-
-#btClose::hover{ image: url(:/icons/icons/close_on.png);}</string>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
            </property>
           </widget>
          </item>

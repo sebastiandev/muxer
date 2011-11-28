@@ -11,6 +11,11 @@ public:
     static qint64      getFileSize(const QStringList &files);
     static qint64      getFileSize(const QString &file);
     static QStringList getFilesInDirectory(const QString &path);
+    static int         howManyFiles(const QString &path, const QStringList &filter=QStringList(), bool recursive=true);
+
+private:
+
+    static void        countFilesInDir(const QString &path, const QStringList &filter, int &count);
 
 };
 
