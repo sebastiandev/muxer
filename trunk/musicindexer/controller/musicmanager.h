@@ -5,10 +5,12 @@
 #include "database/songindexer.h"
 #include "entities/album.h"
 #include "entities/artist.h"
-#include "similaritymanager.h"
+#include <QObject>
 
-class MusicManager
+class MusicManager : public QObject
 {
+    Q_OBJECT
+
 public:
 
     ~MusicManager();
@@ -25,16 +27,26 @@ public:
     Artist getArtist(const QString &artistName);
 
 
+signals:
+
+    void indexing(const QString&, int, int);
+
+public slots:
+
 
 private:
 
+    MusicManager(){}
     MusicManager(SongIndexer songIndexer, SongFinder songFinder);
+
+    static MusicManager *instance;
+
+    QStringList loadStopWords();
 
     Xapian::WritableDatabase _db;
 
     SongIndexer       _indexer;
     SongFinder        _finder;
-    //SimilarityManager _similarityManager;
 
 };
 

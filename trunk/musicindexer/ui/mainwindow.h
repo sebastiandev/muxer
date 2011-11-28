@@ -26,6 +26,9 @@ public slots:
     void slotShowSongs(const QStringList &songlist);
     void slotShowSimilarity(const QStringList &songlist);
     void slotPlaySongRequested(const Song&, const QString&);
+    void slotShowProgress();
+    void slotUpdateProgress(int progress);
+    void slotHideProgress();
 
 private slots:
     void highlightInput();

@@ -24,6 +24,10 @@ protected:
     virtual void runAction(   );
     virtual bool cleanup(     );
 
+private slots:
+
+    void calculateProgress(QString file, int count, int total);
+
 private:
 
     QStringList _filesToImport;

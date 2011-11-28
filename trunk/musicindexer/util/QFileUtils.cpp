@@ -53,6 +53,59 @@ qint64 QFileUtils::getFileSize(const QString &file)
     return fileInfo.size();
 }
 
+int QFileUtils::howManyFiles(const QString &path, const QStringList &filter, bool recursive)
+{
+    int count = 0;
+
+    if (!recursive)
+    {
+        QDir dir(path);
+        count = dir.entryList(filter, QDir::NoDotAndDotDot | QDir::Files).size();
+    }
+    else
+    {
+        countFilesInDir(path, filter, count);
+    }
+
+    return count;
+}
+
+void QFileUtils::countFilesInDir(const QString &path, const QStringList &filter, int &count)
+{
+    QFileInfo fileInfo(path);
+    if (fileInfo.isDir())
+    {
+        QDir dir = fileInfo.dir();
+        dir.cd(fileInfo.fileName());
+
+        QStringList subFiles = dir.entryList();
+        foreach (const QString & subFile, subFiles) //add the absolute path to each entry of the list
+        {
+            if (subFile == "." || subFile == ".." )
+                continue;
+
+            countFilesInDir(QString("%1/%2").arg(fileInfo.absoluteFilePath()).arg(subFile), filter, count);
+        }
+    }
+    else
+    {
+        bool isOk = false;
+
+        foreach (const QString &f, filter)
+        {
+            QRegExp reg(f); reg.setPatternSyntax(QRegExp::Wildcard);
+            if (path.contains(reg))
+            {
+                isOk = true;
+                break;
+            }
+        }
+
+        if (isOk)
+            count++;
+    }
+}
+
 QStringList QFileUtils::getFilesInDirectory(const QString &path)
 {
     QStringList files;

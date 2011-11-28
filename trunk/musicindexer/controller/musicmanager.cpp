@@ -15,6 +15,9 @@
 #include "configuration/ConfigurationManager.h"
 #include "database/IndexerException.h"
 #include "logging/LoggerManager.h"
+#include "similaritymanager.h"
+
+MusicManager* MusicManager::instance = NULL;
 
 MusicManager::~MusicManager()
 {
@@ -36,12 +39,36 @@ MusicManager::MusicManager(SongIndexer songIndexer, SongFinder songFinder)
     {
         std::cout << e.get_description() << std::endl;
     }
+
+    _indexer.setStopWords( loadStopWords() );
 }
 
 MusicManager& MusicManager::manager()
 {
-    static MusicManager instance = MusicManager(SongIndexer(), SongFinder());//allocate only once
-    return instance;
+    //static MusicManager instance = MusicManager(SongIndexer(), SongFinder());//allocate only once
+    if (!instance)
+        instance = new MusicManager(SongIndexer(), SongFinder());//allocate only once
+
+    return *instance;
+}
+
+QStringList MusicManager::loadStopWords()
+{
+    QStringList stopwords;
+    QFile file(ConfigurationManager::GetString("stopwordsFile"));
+
+    if (file.open(QIODevice::ReadOnly | QIODevice::Text))
+    {
+        while (!file.atEnd())
+        {
+            QString line = file.readLine();
+            stopwords << line.split(",");
+        }
+
+        file.close();
+    }
+
+    return stopwords;
 }
 
 void MusicManager::addSongsFromDirectory(QString dirPath)
@@ -52,6 +79,9 @@ void MusicManager::addSongsFromDirectory(QString dirPath)
     QString file, currentAlbumPath;
     Song song;
 
+    int count = 0;
+    int amountOfFiles = QFileUtils::howManyFiles(dirPath, QStringList() << "*.mp3" << "*.wav" << "*.flac" << "*.ogg"<< "*.wma");
+
     QDirIterator it(dirPath, QDir::NoDotAndDotDot | QDir::Files, QDirIterator::Subdirectories);
     while(it.hasNext())
     {
@@ -60,7 +90,8 @@ void MusicManager::addSongsFromDirectory(QString dirPath)
 
         if (!taglibFile.isNull() && taglibFile.tag())
         {
-            qDebug() << "Indexing file: " << file;
+            //qDebug() << "Indexing file: " << file;
+            emit indexing(file, ++count, amountOfFiles);
 
             TagLib::Tag *tag = taglibFile.tag();
             song = Song(tag->title().toCString(), tag->album().toCString(), tag->artist().toCString(), QString::number(tag->year()), tag->genre().toCString(), "", 100, "");
@@ -86,7 +117,7 @@ void MusicManager::addSongsFromDirectory(QString dirPath)
 
                 currentAlbumPath = EntitiesUtil::getAlbumPathFromFile(file);
 
-                qDebug () << "Album path: " << currentAlbumPath;
+                //qDebug () << "Album path: " << currentAlbumPath;
 
                 currentAlbum.setArtist(song.getArtist());
                 currentAlbum.setTitle(song.getAlbum());
