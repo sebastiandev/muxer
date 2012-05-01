@@ -16,6 +16,8 @@ public:
 
 Q_SIGNALS:
 
+    void songWithEmptyTerms(const QString&, const QString&);
+
 public Q_SLOTS:
 
 protected:
@@ -26,7 +28,7 @@ protected:
 
 private Q_SLOTS:
 
-    void calculateProgress(QString file, int count, int total);
+    void slotCalculateProgress(QString file, int count, int total);
 
 private:
 

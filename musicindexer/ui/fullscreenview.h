@@ -26,6 +26,10 @@ public Q_SLOTS:
     void importMusic();
     void showMusic  ();
 
+Q_SIGNALS:
+
+    void quit();
+
 protected:
 
     void mousePressEvent(QMouseEvent *event);

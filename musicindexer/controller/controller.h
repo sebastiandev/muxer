@@ -2,8 +2,11 @@
 #define CONTROLLER_H
 
 #include <QObject>
+#include <QPair>
+
 #include "logging/ILogger.h"
-#include "ui/mainwindow.h"
+//#include "ui/mainwindow.h"
+#include "ui/fullscreenview.h"
 #include "actionimport.h"
 #include "actionsearch.h"
 
@@ -13,7 +16,7 @@ class Controller : public QObject
 public:
     explicit Controller(QObject *parent = 0);
 
-    void init();
+    void init(QWidget *view);
 
 Q_SIGNALS:
 
@@ -37,18 +40,29 @@ public Q_SLOTS:
     void slotCollectionClicked();
     void slotSimilarityClicked();
     void slotSearchFinished   (const QStringList&);
+    void slotShutDown         ();
+
+private Q_SLOTS:
+
+    void slotSongWithEmptyTerms(const QString& file, const QString& msg);
+
 
 private:
 
     void connectStandarActionSignals(MBAction * action);
+    void loadPendingFiles();
 
     QScopedPointer<ILogger>      _logger;
-    QScopedPointer<MainWindow>   _mainwindow;
+    //QScopedPointer<MainWindow>   _mainwindow;
+    QScopedPointer<FullScreenView> _mainwindow;
 
     // Actions
-    QScopedPointer<ActionImport> _actionImport;
-    QScopedPointer<ActionSearch> _actionSearch;
+    QScopedPointer<ActionImport>    _actionImport;
+    QScopedPointer<ActionSearch>    _actionSearch;
 
+    QList<QPair<QString, QString> > _pendingSongs;
+    QFile                           _pendingSongsFile;
 };
+
 
 #endif // CONTROLLER_H

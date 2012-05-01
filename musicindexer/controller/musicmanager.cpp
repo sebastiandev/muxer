@@ -105,11 +105,17 @@ void MusicManager::addSongsFromDirectory(QString dirPath)
             {
                 qDebug() << "Error '" << ie.getMsg() << "' " << "indexing file: " << ie.getFile();
                 LoggerManager::LogDebug("[Music Manager] Error indexing file: " + ie.getFile() + ". Cause: " + ie.getMsg());
+
+                if (ie.getErrorCode() == IndexerException::EMPTY_TERM)
+                    Q_EMIT songWithEmptyTerms(ie.getFile(), ie.getMsg());
+
                 continue;
             }
 
-            if (song.getAlbum()  != currentAlbum.getTitle())
+            // if there's a new album, save the previous one and start building the new one
+            if (song.getAlbum() != currentAlbum.getTitle())
             {
+                // The first run the currentAlbum is empty and there's no previous album
                 if (!currentAlbum.getTitle().isEmpty())
                 {
                     SimilarityManager::manager().addAlbum(currentAlbumPath, currentAlbum);
