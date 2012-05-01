@@ -29,7 +29,8 @@ public:
 
 Q_SIGNALS:
 
-    void indexing(const QString&, int, int);
+    void indexing          (const QString&, int, int);
+    void songWithEmptyTerms(const QString&, const QString&);
 
 public Q_SLOTS:
 

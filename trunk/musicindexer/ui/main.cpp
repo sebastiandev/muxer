@@ -6,9 +6,8 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    //Controller c;
+    QApplication::setApplicationName("Muxer");
 
-    //c.init();
     FullScreenView *screen = new FullScreenView();
 
 #ifdef Q_WS_X11
@@ -31,7 +30,11 @@ int main(int argc, char *argv[])
     }
 #endif
 
-    screen->show();
+    //screen->show();
+
+    Controller c;
+    c.init(screen);
+
 
     return a.exec();
 }

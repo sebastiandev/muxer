@@ -25,6 +25,7 @@ FullScreenView::FullScreenView(QWidget *parent) :
 
     connect(ui->btnAddMusic, SIGNAL(clicked()), this, SLOT(importMusic()));
     connect(ui->btnCollection, SIGNAL(clicked()), this, SLOT(showMusic()));
+    connect(ui->btnQuit, SIGNAL(clicked()), this, SIGNAL(quit()));
     connect(ui->btnQuit, SIGNAL(clicked()), this, SLOT(close()));
 }
 

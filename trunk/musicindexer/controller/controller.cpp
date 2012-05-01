@@ -26,16 +26,18 @@ Controller::Controller(QObject *parent) :
     LoggerManager::SetLogLevel(LoggerManager::Debug);
 }
 
-void Controller::init()
+void Controller::init(QWidget* view)
 {
-    _mainwindow.reset(new MainWindow());
+    //_mainwindow.reset(new MainWindow());
+    _mainwindow.reset((FullScreenView*)view);
 
-    QApplication::setApplicationName("Muxer");
+    loadPendingFiles();
 
     connect(_mainwindow.data(), SIGNAL(searchTrigger(const QString&)), this, SLOT(slotSearch(const QString&)));
     connect(_mainwindow.data(), SIGNAL(addResourcesTrigger())        , this, SLOT(slotAddResources()));
     connect(_mainwindow.data(), SIGNAL(getCollectionTrigger())       , this, SLOT(slotCollectionClicked()));
     connect(_mainwindow.data(), SIGNAL(showSimilarityTrigger())      , this, SLOT(slotSimilarityClicked()));
+    connect(_mainwindow.data(), SIGNAL(quit())                       , this, SLOT(slotShutDown()));
 
     connect(this              , SIGNAL(showSearchResult(const QStringList&)), _mainwindow.data(), SLOT(slotShowSongs(const QStringList&)));
     connect(this              , SIGNAL(showCollection  (const QStringList&)), _mainwindow.data(), SLOT(slotShowSongs(const QStringList&)));
@@ -107,10 +109,16 @@ void Controller::slotAddResources()
     _actionImport.reset(new ActionImport(QDir(directory)));
 
     connect(_actionImport.data(), SIGNAL(actionStarted()) , this , SLOT(slotImportStarted()));
+    connect(_actionImport.data(), SIGNAL(songWithEmptyTerms(QString,QString)) , this , SLOT(slotSongWithEmptyTerms(QString, QString)));
 
     connectStandarActionSignals(_actionImport.data());
 
     _actionImport->execute();
+}
+
+void Controller::slotSongWithEmptyTerms(const QString &file, const QString &msg)
+{
+    _pendingSongs << QPair<QString, QString>(file, msg);
 }
 
 void Controller::slotCollectionClicked()
@@ -121,4 +129,35 @@ void Controller::slotCollectionClicked()
 void Controller::slotSimilarityClicked()
 {
     Q_EMIT showSimilarity(MusicManager::manager().getAllSongs());
+}
+
+void Controller::loadPendingFiles()
+{
+    _pendingSongsFile.setFileName(ConfigurationManager::GetString("pendingFiles"));
+    if (_pendingSongsFile.open(QIODevice::ReadWrite | QIODevice::Text))
+    {
+        QTextStream in(&_pendingSongsFile);
+        while (!in.atEnd())
+        {
+            QStringList item = in.readLine().split(":");
+            _pendingSongs << QPair<QString, QString>(item.first(), item.at(1));
+        }
+    }
+}
+
+void Controller::slotShutDown()
+{
+    // save pending files, if any, to be recovered next time
+    if (!_pendingSongs.isEmpty())
+    {
+        if (_pendingSongsFile.reset())
+        {
+            QTextStream out(&_pendingSongsFile);
+            for (int i=0; i<_pendingSongs.size(); i++)
+            {
+                out << _pendingSongs.at(i).first  <<  ": ";
+                out << _pendingSongs.at(i).second << "\n";
+            }
+        }
+    }
 }
