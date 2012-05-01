@@ -54,18 +54,25 @@ QStringList SongFinder::searchExactTerms(const QStringList &strquery)
 QStringList SongFinder::doSearch(const Xapian::Query &query)
 {
     qDebug() << "query: " << QString(query.get_description().c_str());
-
-    Xapian::Enquire enquire(db);
-    enquire.set_query(query);
-
     QStringList result;
-    Xapian::MSet matches = enquire.get_mset(0, 1000000);
-    for(Xapian::MSetIterator it = matches.begin(); it != matches.end(); it++)
+
+    try
     {
-        result << QString(it.get_document().get_data().c_str());
-        //qDebug() << QString(it.get_document().get_data().c_str());
-        //for(Xapian::TermIterator it2 = it.get_document().termlist_begin(); it2 != it.get_document().termlist_end(); it2++)
-        //    qDebug() << QString(std::string(*it2).c_str());
+        Xapian::Enquire enquire(db);
+        enquire.set_query(query);
+
+        Xapian::MSet matches = enquire.get_mset(0, 1000000);
+        for(Xapian::MSetIterator it = matches.begin(); it != matches.end(); it++)
+        {
+            result << QString(it.get_document().get_data().c_str());
+            qDebug() << QString(it.get_document().get_data().c_str());
+            //for(Xapian::TermIterator it2 = it.get_document().termlist_begin(); it2 != it.get_document().termlist_end(); it2++)
+            //    qDebug() << QString(std::string(*it2).c_str());
+        }
+    }
+    catch (const Xapian::Error &e)
+    {
+        qDebug() << QString(e.get_description().c_str());
     }
 
     result.sort();

@@ -13,7 +13,7 @@ public:
     void execute();
     virtual void cancel();
 
-signals:
+Q_SIGNALS:
     void actionStarted();
     void actionProgress(int progress);
     void actionError(const QString & errorDesc);
@@ -22,7 +22,7 @@ signals:
     void getInputFromUser(const QString &, QString *);
     void showMessageFile(const QString &, const QString &, int *);
 
-public slots:
+public Q_SLOTS:
     void Go();
 
 protected:

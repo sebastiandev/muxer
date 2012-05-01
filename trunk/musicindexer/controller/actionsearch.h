@@ -13,10 +13,10 @@ public:
 
     explicit ActionSearch(const QString &query);
 
-signals:
+Q_SIGNALS:
     void searchFinished(const QStringList&);
 
-public slots:
+public Q_SLOTS:
 
 protected:
 

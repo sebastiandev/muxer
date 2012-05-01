@@ -18,7 +18,7 @@ public:
     void setAlbums (const QList<QPair<QImage, QString> > &albums);
     void setSimilar(const QList<QPair<QImage, QString> > &items);
 
-signals:
+Q_SIGNALS:
 
     void artistSimilaritySelected();
     void albumSimilaritySelected ();
@@ -26,7 +26,7 @@ signals:
     void albumSimilarityRequested(const QString&, const QString&);
 
 
-private slots:
+private Q_SLOTS:
 
     void artistOptionSelected();
     void albumOptionSelected ();

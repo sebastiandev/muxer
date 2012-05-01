@@ -28,11 +28,11 @@ QString GenreManager::toString()
         Genre genre = it.value();
 
         info += "[" + genre.getDisplay() + " [variants ->";
-        foreach(Genre var, genre.getVariants())
+        Q_FOREACH(Genre var, genre.getVariants())
             info += var.getDisplay() + ",";
 
         info += "], [sub-genres ->";
-        foreach(Genre sub, genre.getSubGenres())
+        Q_FOREACH(Genre sub, genre.getSubGenres())
             info += sub.getDisplay() + ",";
 
         info += "] \n";
@@ -47,7 +47,7 @@ QList<Genre> GenreManager::getAllGenres()
     QList<Genre> list    = _genres.values();
     QList<Genre> listaux = list;
 
-    foreach(const Genre &genre, listaux)
+    Q_FOREACH(const Genre &genre, listaux)
     {
         list.append(genre.getSubGenres());
         list.append(genre.getVariants());

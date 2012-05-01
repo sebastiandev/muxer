@@ -15,7 +15,7 @@ public:
 
     void init();
 
-signals:
+Q_SIGNALS:
 
     void askForDirectory (QString*);
     void showSearchResult(const QStringList&);
@@ -26,25 +26,24 @@ signals:
     void hideProgress    ();
 
 
-public slots:
+public Q_SLOTS:
 
-    void slotImportStarted();
-    void slotActionProgress(int);
-    void slotActionError(const QString &);
-    void slotActionEnded(bool);
-
-    void slotSearch(const QString &query);
-    void slotAddResources();
+    void slotImportStarted    ();
+    void slotActionProgress   (int);
+    void slotActionError      (const QString &);
+    void slotActionEnded      (bool);
+    void slotSearch           (const QString &query);
+    void slotAddResources     ();
     void slotCollectionClicked();
     void slotSimilarityClicked();
-    void slotSearchFinished(const QStringList&);
+    void slotSearchFinished   (const QStringList&);
 
 private:
 
     void connectStandarActionSignals(MBAction * action);
 
-    QScopedPointer<ILogger>       _logger;
-    QScopedPointer<MainWindow>    _mainwindow;
+    QScopedPointer<ILogger>      _logger;
+    QScopedPointer<MainWindow>   _mainwindow;
 
     // Actions
     QScopedPointer<ActionImport> _actionImport;

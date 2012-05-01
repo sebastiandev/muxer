@@ -18,11 +18,12 @@ QList<Artist> SimilarityManager::getSimilarArtists(const Artist &artist)
 {
     QList<Artist> similarArtists;
 
-    foreach (const Album &album, artist.getAlbums())
+    Q_FOREACH(const Album &album, artist.getAlbums())
     {
         QList<Album> similarAlbums = getSimilarAlbums(album);
-        foreach (const Album &similarAlbum, similarAlbums)
+        Q_FOREACH(const Album &similarAlbum, similarAlbums)
         {
+            //skip albums from the same artist
             if (similarAlbum.getArtist() == artist.getName())
                 continue;
 
@@ -42,7 +43,7 @@ QList<Album>  SimilarityManager::getSimilarAlbums(const Album &album)
     QList<AlbumDataObject> result = searchSimilarAlbums(album, albumData);
 
     QList<Album> similarAlbums;
-    foreach (const AlbumDataObject &r, result)
+    Q_FOREACH(const AlbumDataObject &r, result)
     {
         Album a = EntitiesUtil::getAlbumDataFromDir(r.getPath());
 
@@ -64,13 +65,23 @@ QList<AlbumDataObject> SimilarityManager::searchSimilarAlbums(const Album &album
 
     QStringList genres, types;
 
-    // choose only the first genre from the ranking and those whose frecuency is greater than half of the first and half of the previous
+    // choose only the first genre from the ranking and those whose frecuency is
+    // greater than half of the first and greater thatn the diferences betwen the first and the next
+    // ej:  8 - a
+    //      6 - b  --> it will add genre b because its > 8/2 (first genre a) and > (8-3) (diference between genre a and c)
+    //      3 - c
+    //
+    // ej:  8 - a
+    //      4 - b  --> it will NOT add genre b because its > 8/2 (first genre a) BUT < (8-3) (diference between genre a and c)
+    //      3 - c
+    // this way we avoid adding genres that are between gaps and may not be really relevant,
+
     for (int i=0; i<genresRanking.size(); i++)
     {
         if (i == 0)
             genres.append(genresRanking.at(i).first);
 
-        if (i>0 && genresRanking.at(i).second > (genresRanking.at(0).second / 2) && genresRanking.at(i).second > (genresRanking.at(i-1).second / 2))
+        if (i>0 && genresRanking.at(i).second > (genresRanking.at(0).second / 2) && genresRanking.at(i).second > (genresRanking.at(0).second - genresRanking.at(i-1).second ))
             genres.append(genresRanking.at(i).first);
     }
 
@@ -119,7 +130,7 @@ public:
 QList<QString> SimilarityManager::calculateMostCommonGenres(const Artist &artist)
 {
     const QList<Album> &albums = artist.getAlbums();
-    foreach(const Album &album, albums)
+    Q_FOREACH(const Album &album, albums)
     {
     }
 
@@ -131,10 +142,10 @@ QList<QPair<QString, int> > SimilarityManager::calculateMostCommonAttribute(cons
     QMap<QString, AuxItem*> attrMap;
 
     const QList<Song> &songs = album.getSongs();
-    foreach (const Song &song, songs)
+    Q_FOREACH(const Song &song, songs)
     {
         QList<QString> attributeList = (ATTR == GENRE ? song.getGenres() : song.getType().split(","));
-        foreach(QString attribute, attributeList)
+        Q_FOREACH(QString attribute, attributeList)
         {
             if (!attribute.isEmpty())
             {
@@ -160,7 +171,7 @@ QList<QPair<QString, int> > SimilarityManager::calculateMostCommonAttribute(cons
     qSort(attributeRanking);//sort (by default is ascending)
 
     QList<QPair<QString, int> > finalRanking;
-    foreach(const AuxItem &item, attributeRanking)
+    Q_FOREACH(const AuxItem &item, attributeRanking)
         finalRanking.prepend(QPair<QString, int>(item._key, item._ocurrences));//add prepeding to build a decending list
 
     return finalRanking;

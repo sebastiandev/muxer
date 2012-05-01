@@ -1,10 +1,10 @@
 #include "entitiesutil.h"
-#include "taglib/tag.h"
-#include "taglib/fileref.h"
-#include "taglib/id3v2tag.h"
-#include "taglib/attachedpictureframe.h"
-#include "taglib/mpegfile.h"
-#include "taglib/tmap.h"
+#include <tag.h>
+#include <fileref.h>
+#include <id3v2tag.h>
+#include <attachedpictureframe.h>
+#include <mpegfile.h>
+#include <tmap.h>
 
 #include <QDirIterator>
 #include <QMap>
@@ -28,14 +28,13 @@ Album EntitiesUtil::getAlbumDataFromDir(const QString &dir)
         if (!getSongFromFile(file, song))
             continue;
 
-        /*
         TagLib::FileRef taglibFile(file.toUtf8().data());
 
         if (!taglibFile.isNull() && taglibFile.tag())
         {
             TagLib::Tag *tag = taglibFile.tag();
             Song song(tag->title().toCString(), tag->album().toCString(), tag->artist().toCString(), QString::number(tag->year()), tag->genre().toCString(), "", 100, "");
-        */
+
             if (empty || (!album->getTitle().isEmpty() && !song.getAlbum().isEmpty() && album->getTitle() != song.getAlbum()))
             {
                 album = getAlbumFromFile(file);
@@ -43,7 +42,7 @@ Album EntitiesUtil::getAlbumDataFromDir(const QString &dir)
             }
 
             album->addSong(song);
-        //}
+        }
     }
 
     return *album;
@@ -56,7 +55,7 @@ QList<Artist> EntitiesUtil::getArtistsFromSongs(const QStringList &songs)
 
     QList<Album> albums = getAlbumsFromSongs(songs);
 
-    foreach (const Album &album, albums)
+     Q_FOREACH(const Album &album, albums)
     {
         if (!artistMap.contains(album.getArtist()))
         {
@@ -85,26 +84,17 @@ QList<Album> EntitiesUtil::getAlbumsFromSongs(const QStringList &songs)
     QList<Album> albumList;
 
     QMap<QString, Album*> map;
-    foreach(const QString& songFile, songs)
+    Q_FOREACH(const QString& songFile, songs)
     {
-        /*
+
         TagLib::FileRef tagLibFile(songFile.toUtf8().data());
         if (!tagLibFile.isNull())
         {
             TagLib::Tag *tag = tagLibFile.tag();
             Song song(tag->title().toCString(), tag->album().toCString(), tag->artist().toCString(), QString::number(tag->year()), tag->genre().toCString(), "", 100, "");
 
-            if (tagLibFile.audioProperties())
-            {
-                song.setBitrate(tagLibFile.audioProperties()->bitrate());
-                song.setLength(tagLibFile.audioProperties()->length());
-            }
-            */
-            Song song;
-
             if (!getSongFromFile(songFile, song))
                 continue;
-
 
             if (map.contains(song.getArtist()+song.getAlbum()))
             {
@@ -117,7 +107,7 @@ QList<Album> EntitiesUtil::getAlbumsFromSongs(const QStringList &songs)
 
                 map.insert(song.getArtist()+song.getAlbum(), album);
             }
-        //}
+        }
     }
 
     QMapIterator<QString, Album*> it(map);
@@ -149,7 +139,7 @@ Album* EntitiesUtil::getAlbumFromFile(const QString &file)
 
     if (!tagLibFile.isNull() && tagLibFile.tag())
     {
-        TagLib::Tag *tag = tagLibFile.tag();    
+        TagLib::Tag *tag = tagLibFile.tag();
         TagLib::MPEG::File *mp3  = dynamic_cast<TagLib::MPEG::File *> (tagLibFile.file());
         if (mp3 && mp3->ID3v2Tag())
         {
@@ -207,7 +197,7 @@ QString EntitiesUtil::getAlbumPathFromFile(const QString &filePath)
         QFileInfoList list = auxDir.entryInfoList(QDir::NoDotAndDotDot | QDir::Files | QDir::Dirs);
         QFileInfoList sublist;
 
-        foreach(QFileInfo inf, list)
+        Q_FOREACH(QFileInfo inf, list)
         {
             if (inf.isDir() && inf.absoluteFilePath() != currentAlbumPath)
             {
@@ -237,6 +227,7 @@ QString EntitiesUtil::getAlbumPathFromFile(const QString &filePath)
 
 bool EntitiesUtil::getSongFromFile(const QString &file, Song &song)
 {
+
     TagLib::FileRef tagLibFile(file.toUtf8().data());
     if (!tagLibFile.isNull())
     {
@@ -249,43 +240,6 @@ bool EntitiesUtil::getSongFromFile(const QString &file, Song &song)
             song.setLength(tagLibFile.audioProperties()->length());
         }
 
-        /*
-        TagLib::MPEG::File *mp3  = dynamic_cast<TagLib::MPEG::File *> (tagLibFile.file());
-        if (mp3 && mp3->ID3v2Tag())
-        {
-            //TagLib::ID3v2::FrameList list = mp3->ID3v2Tag()->frameListMap()["APIC"];
-            // Las claves de FrameListMap no estan terminadas en  NULL, y tienen basura!!
-            // no se puede usar el metodo de [key], hay que recorrer el mapa y
-            // buscar los primeros 4 caracteres de cada clave y obtener el valor del mapa.
-            TagLib::ID3v2::FrameList apicList;
-            TagLib::Map<TagLib::ByteVector,TagLib::List<TagLib::ID3v2::Frame*> >::ConstIterator i = mp3->ID3v2Tag()->frameListMap().begin();
-            for (; i != mp3->ID3v2Tag()->frameListMap().end();i++)
-            {
-                QString key = QString::fromLatin1((*i).first.data(), 4);
-                //qDebug() << key;
-                if (key == "APIC")
-                {
-                    apicList = (*i).second;
-                    break;
-                }
-            }
-
-            TagLib::List<TagLib::ID3v2::Frame*>::ConstIterator it = apicList.begin();
-            for (; it != apicList.end();it++)
-            {
-                TagLib::ID3v2::Frame* frame = *it;
-                //qDebug() << frame->toString().data(TagLib::String::UTF8).data();
-            }
-
-            if (apicList.size()>0)
-            {
-                TagLib::ID3v2::AttachedPictureFrame *cover = dynamic_cast<TagLib::ID3v2::AttachedPictureFrame*> (apicList.front());
-                QImage coverArt;
-                coverArt.loadFromData((const uchar*)cover->picture().data(), cover->picture().size());
-                song.setCover(coverArt);
-            }
-        }
-        */
     }
     else
         return false;
@@ -297,7 +251,7 @@ QPair<Song, QString> EntitiesUtil::getSongAndFileFromSongList(const QStringList 
 {
     QPair<Song, QString> songInfo;
 
-    foreach(const QString& songFile, songs)
+    Q_FOREACH(const QString& songFile, songs)
     {
         Song s;
         getSongFromFile(songFile, s);

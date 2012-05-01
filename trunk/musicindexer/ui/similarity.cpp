@@ -56,7 +56,7 @@ void Similarity::artistOptionSelected()
     ui.wInfo->hide();
     ui.leSearch->show();
     ui.listWidget->show();
-    emit artistSimilaritySelected();
+    Q_EMIT artistSimilaritySelected();
 
     _currentView = ARTIST;
 }
@@ -66,7 +66,7 @@ void Similarity::albumOptionSelected()
     ui.wInfo->hide();
     ui.leSearch->show();
     ui.listWidget->show();
-    emit albumSimilaritySelected();
+    Q_EMIT albumSimilaritySelected();
 
     _currentView = ALBUM;
 }
@@ -75,7 +75,7 @@ void Similarity::setArtists(const QStringList &artists)
 {
     ui.listWidget->clear();
 
-    foreach (const QString &artist, artists)
+     Q_FOREACH(const QString &artist, artists)
         ui.listWidget->addItem(new QListWidgetItem(artist));
 }
 
@@ -97,11 +97,11 @@ void Similarity::itemForSimilaritySelected(QListWidgetItem* item)
 
     if (_currentView == ALBUM)
     {
-        emit albumSimilarityRequested(selection.split(" - ").first(), selection.split(" - ").at(1));
+        Q_EMIT albumSimilarityRequested(selection.split(" - ").first(), selection.split(" - ").at(1));
     }
     else
     {
-        emit artistSimilarityRequested(selection);
+        Q_EMIT artistSimilarityRequested(selection);
     }
 }
 

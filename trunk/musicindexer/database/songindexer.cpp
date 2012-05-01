@@ -85,17 +85,17 @@ void SongIndexer::index(const QString &path, const Song &song)
     }
 }
 
-bool SongIndexer::addTermsToDocument(Xapian::Document &doc, const QString &buffer, const QString &separator)
+bool SongIndexer::addTermsToDocument(Xapian::Document &doc, const QString &terms, const QString &separator)
 {
     // Indexes every single word from buffer, and then the whole thing joined with '_'
-    if (buffer.isEmpty())
+    if (terms.isEmpty())
     {
         return false;
     }
     else
     {
-        QStringList var = buffer.split(separator);
-        foreach(const QString &term, var)
+        QStringList termList = terms.split(separator);
+        Q_FOREACH(const QString &term, termList)
         {
             if (!_stopwords.contains(term, Qt::CaseInsensitive))
             {
@@ -105,19 +105,19 @@ bool SongIndexer::addTermsToDocument(Xapian::Document &doc, const QString &buffe
         }
 
         // join only when there are 2 or more terms
-        if (var.size() > 1)
+        if (termList.size() > 1)
         {
-            doc.add_term(var.join("_").toLower().toStdString());
-            LoggerManager::LogDebug("[Song Indexer] adding term " + var.join("_").toLower());
+            doc.add_term(termList.join("_").toLower().toStdString());
+            LoggerManager::LogDebug("[Song Indexer] adding term " + termList.join("_").toLower());
         }
     }
 
     return true;
 }
 
-bool SongIndexer::addNormalizedGenresToDocument(Xapian::Document &doc, const QStringList &buffer)
+bool SongIndexer::addNormalizedGenresToDocument(Xapian::Document &doc, const QStringList &rawgenres)
 {
-    if (buffer.isEmpty())
+    if (rawgenres.isEmpty())
     {
         return false;
     }
@@ -125,10 +125,10 @@ bool SongIndexer::addNormalizedGenresToDocument(Xapian::Document &doc, const QSt
     {
         TagNormalizator normalizator(ConfigurationManager::GetString("genresdb"), ConfigurationManager::GetInt("maxIndexerNormalizingDistance"));
 
-        foreach(const QString &str, buffer)
+        Q_FOREACH(const QString &rawgenre, rawgenres)
         {
-            QStringList normalizedTermns = normalizator.normalizeGenre(str);
-            foreach (const QString& genre, normalizedTermns)
+            QStringList normalizedGenres = normalizator.normalizeGenre(rawgenre);
+             Q_FOREACH(const QString& genre, normalizedGenres)
             {
                 LoggerManager::LogDebug("[Song Indexer] adding normalized genre " + genre.trimmed().toLower());
                 doc.add_term(genre.toStdString());

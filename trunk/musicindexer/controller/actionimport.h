@@ -14,9 +14,9 @@ public:
     ActionImport(QStringList);
     ActionImport(QDir);
 
-signals:
+Q_SIGNALS:
 
-public slots:
+public Q_SLOTS:
 
 protected:
 
@@ -24,7 +24,7 @@ protected:
     virtual void runAction(   );
     virtual bool cleanup(     );
 
-private slots:
+private Q_SLOTS:
 
     void calculateProgress(QString file, int count, int total);
 

@@ -18,20 +18,20 @@ public:
     static MusicManager& manager();
 
     void addSongsFromDirectory(QString dirPath);
-    void addSongs(QStringList songsPath);
-    void addSong(QString songPath);
+    void addSongs             (QStringList songsPath);
+    void addSong              (QString songPath);
 
-    QStringList search(QString query);
-    QStringList getAllSongs();
+    QStringList  search           (QString query);
+    QStringList  getAllSongs      ();
     QList<Album> getAlbumsByArtist(const QString &artist);
-    Artist getArtist(const QString &artistName);
+    Artist       getArtist        (const QString &artistName);
 
 
-signals:
+Q_SIGNALS:
 
     void indexing(const QString&, int, int);
 
-public slots:
+public Q_SLOTS:
 
 
 private:
@@ -39,14 +39,12 @@ private:
     MusicManager(){}
     MusicManager(SongIndexer songIndexer, SongFinder songFinder);
 
-    static MusicManager *instance;
-
     QStringList loadStopWords();
 
+    static MusicManager      *instance;
     Xapian::WritableDatabase _db;
-
-    SongIndexer       _indexer;
-    SongFinder        _finder;
+    SongIndexer              _indexer;
+    SongFinder               _finder;
 
 };
 

@@ -35,7 +35,7 @@ public:
 
     void clear();
 
-signals:
+Q_SIGNALS:
 
     void itemSelected(QModelIndex);
     void songSelected(const QString&, const QString&, const QString&);
@@ -45,7 +45,7 @@ signals:
     void GenreViewSelected();
     void albumSelectedFromArtistDetail(const QString&, const QString&);
 
-private slots:
+private Q_SLOTS:
 
     void slotAlbumSelected(const QString &album);
     void restoreView();

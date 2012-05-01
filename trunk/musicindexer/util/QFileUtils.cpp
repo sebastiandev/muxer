@@ -16,7 +16,7 @@ qint64 QFileUtils::getFileSize(const QStringList &files)
 {
     qint64 totalSize = 0;
 
-    foreach(const QString & file, files)
+    Q_FOREACH(const QString & file, files)
     {
         QFileInfo fileInfo(file);
 
@@ -29,7 +29,7 @@ qint64 QFileUtils::getFileSize(const QStringList &files)
             dir.cd(fileInfo.fileName());
             QStringList subFiles = dir.entryList();
             QStringList subFilesWithPath;
-            foreach (const QString & subFile, subFiles) //add the absolute path to each entry of the list
+             Q_FOREACH(const QString & subFile, subFiles) //add the absolute path to each entry of the list
             {
                 if (subFile == "." || subFile == ".." )
                     continue;
@@ -79,7 +79,7 @@ void QFileUtils::countFilesInDir(const QString &path, const QStringList &filter,
         dir.cd(fileInfo.fileName());
 
         QStringList subFiles = dir.entryList();
-        foreach (const QString & subFile, subFiles) //add the absolute path to each entry of the list
+        Q_FOREACH (const QString & subFile, subFiles) //add the absolute path to each entry of the list
         {
             if (subFile == "." || subFile == ".." )
                 continue;
@@ -91,7 +91,7 @@ void QFileUtils::countFilesInDir(const QString &path, const QStringList &filter,
     {
         bool isOk = false;
 
-        foreach (const QString &f, filter)
+        Q_FOREACH (const QString &f, filter)
         {
             QRegExp reg(f); reg.setPatternSyntax(QRegExp::Wildcard);
             if (path.contains(reg))
@@ -117,7 +117,7 @@ QStringList QFileUtils::getFilesInDirectory(const QString &path)
         dir.cd(fileInfo.fileName());
 
         QStringList subFiles = dir.entryList();
-        foreach (const QString & subFile, subFiles) //add the absolute path to each entry of the list
+        Q_FOREACH (const QString & subFile, subFiles) //add the absolute path to each entry of the list
         {
             if (subFile == "." || subFile == ".." )
                 continue;
