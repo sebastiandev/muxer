@@ -25,13 +25,13 @@ public:
 
     void setSimilar(const QList<QPair<QImage, QString> > &items);
 
-signals:
+Q_SIGNALS:
 
     void artistSelected(const QString&);
     void artistSimilarityRequested(const QString&);
     void albumSimilarityRequested(const QString&, const QString&);
 
-private slots:
+private Q_SLOTS:
 
     void slotArtistSelected(QModelIndex);
     void slotArtistSearch();

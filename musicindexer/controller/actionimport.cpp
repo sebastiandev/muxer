@@ -15,6 +15,7 @@ ActionImport::ActionImport(QDir dir):_dirToImport(dir)
 
 bool ActionImport::prepare()
 {
+    return true;
 }
 
 void ActionImport::runAction()
@@ -23,14 +24,15 @@ void ActionImport::runAction()
 
     if (_dirToImport.exists())
     {
-        emit actionStarted();
+        Q_EMIT actionStarted();
         MusicManager::manager().addSongsFromDirectory(_dirToImport.absolutePath());
-        emit actionEnded(true);
+        Q_EMIT actionEnded(true);
     }
 }
 
 bool ActionImport::cleanup()
 {
+    return true;
 }
 
 void ActionImport::calculateProgress(QString file, int count, int total)
@@ -38,5 +40,5 @@ void ActionImport::calculateProgress(QString file, int count, int total)
     int percentage = (count * 100) / total;
     //qDebug() << "indexing file: " << file << ". " << count << "/" << total << " --> " << percentage << "%";
 
-    emit actionProgress(percentage);
+    Q_EMIT actionProgress(percentage);
 }

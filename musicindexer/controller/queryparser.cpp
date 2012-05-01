@@ -15,7 +15,7 @@ QueryParser& QueryParser::parser()
 
 QStringList QueryParser::expandQuery(const QString &query)
 {
-    // we cant use a big distance because it could replace terms from the query that werent mean to be genres
+    // we CANT use a big distance because it could replace terms from the query that werent mean to be genres
     QStringList expandedQuery, queryList;
     TagNormalizator normalizator(ConfigurationManager::GetString("genresdb"), ConfigurationManager::GetInt("maxQueryNormalizingDistance"));
 
@@ -23,7 +23,7 @@ QStringList QueryParser::expandQuery(const QString &query)
     for(int i=0; i<queryList.size(); i++)
     {
         QString qterm = queryList.at(i);
-        expandedQuery << qterm;
+        expandedQuery << qterm;// always add the original term
 
         QStringList normedQ = normalizator.normalizeGenre(qterm);
 
@@ -79,10 +79,10 @@ QStringList QueryParser::expandQuery(const QString &query)
 
 bool QueryParser::queryHasGenres(const QStringList &query)
 {
-
+    return false;
 }
 
 QList<Genre> QueryParser::getGenresFromQuery(const QStringList &query)
 {
-
+    return QList<Genre>();
 }

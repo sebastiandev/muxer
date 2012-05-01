@@ -4,16 +4,16 @@
 #include <QDebug>
 
 ArtistDetail::ArtistDetail(QWidget *parent) :
-    QWidget(parent),
+    QWidget(parent, Qt::FramelessWindowHint),
     ui(new Ui::ArtistDetail)
 {
     ui->setupUi(this);
 
     setAttribute(Qt::WA_TranslucentBackground, true);
-
+/*
     QRegion visibleArea(this->x() + 2, this->y() , this->width() - 4, this->height());
     setMask(visibleArea);
-
+*/
     QGraphicsDropShadowEffect *effect = new QGraphicsDropShadowEffect();
     effect->setBlurRadius(20);
     effect->setXOffset(0.0);
@@ -81,7 +81,7 @@ void ArtistDetail::slotAlbumSelected(QModelIndex index)
     ui->twSongs->setRowCount(0);
 
     QString album = index.data().toString();
-    emit albumSelected(album);
+    Q_EMIT albumSelected(album);
 }
 
 
@@ -95,7 +95,7 @@ void ArtistDetail::keyPressEvent(QKeyEvent *e)
 {
     if (e->key() == Qt::Key_Escape)
     {
-        emit ArtistDetailClosed();
+        Q_EMIT ArtistDetailClosed();
         close();
     }
 }

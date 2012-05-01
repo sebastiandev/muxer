@@ -2,15 +2,15 @@
 #include "ui_collectionview.h"
 
 CollectionView::CollectionView(QWidget *parent) :
-    QWidget(parent),
+    QWidget(parent, Qt::FramelessWindowHint),
     ui(new Ui::CollectionView)
 {
     ui->setupUi(this);
     setAttribute(Qt::WA_TranslucentBackground, true);
-
+/*
     QRegion visibleArea(this->x() + 2, this->y() , this->width() - 4, this->height());
     setMask(visibleArea);
-
+*/
     _originalEffect = new QGraphicsDropShadowEffect();
     _originalEffect->setBlurRadius(20);
     _originalEffect->setXOffset(0.0);
@@ -158,7 +158,7 @@ void CollectionView::showArtistDetail(const QString &artist, const QList<QPair<Q
 
 void CollectionView::slotAlbumSelected(const QString &album)
 {
-    emit albumSelectedFromArtistDetail(ui->listWidget->selectedItems().first()->text(), album);
+    Q_EMIT albumSelectedFromArtistDetail(ui->listWidget->selectedItems().first()->text(), album);
 }
 
 void CollectionView::restoreView()

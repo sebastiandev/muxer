@@ -28,7 +28,7 @@ public:
 
     void updatePosition(QPoint pos);
 
-public slots:
+public Q_SLOTS:
 
     void addSong     (const Song &song, const QString &songFile);
     void playSong    (const Song &song, const QString &songFile);
@@ -36,7 +36,7 @@ public slots:
     void close();
 
 
-private slots:
+private Q_SLOTS:
 
     void tick(qint64 time);
     void sourceChanged(const Phonon::MediaSource &source);

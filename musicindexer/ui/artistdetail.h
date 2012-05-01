@@ -27,12 +27,12 @@ public:
 
     void clear();
 
-signals:
+Q_SIGNALS:
 
     void albumSelected(const QString&);
     void ArtistDetailClosed();
 
-private slots:
+private Q_SLOTS:
 
     void slotAlbumSelected(QModelIndex index);
 

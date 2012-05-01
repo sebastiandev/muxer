@@ -51,13 +51,14 @@ void MusicViewer::showSongs(const QStringList &songs)
 
     _collectionView->clear();
 
-    foreach (const Artist &a, EntitiesUtil::getArtistsFromSongs(_currentSongs))
+    Q_FOREACH(const Artist &a, EntitiesUtil::getArtistsFromSongs(_currentSongs))
         _collectionView->addArtist(a.getName());
 
     if (_currentSongs.size() < 15)
         changeToSongView();
     else
         _collectionView->showArtistView();
+
 }
 
 void MusicViewer::changeToArtistView()
@@ -71,15 +72,17 @@ void MusicViewer::changeToSongView()
 
      if (!_songsLoaded)
      {
-        foreach (const Album &album, EntitiesUtil::getAlbumsFromSongs(_currentSongs))
-            foreach(const Song &song, album.getSongs())
-            {
-                QString length = QString::number(song.getLength());
-                length.insert(length.size()-2, ":");
-                _collectionView->addSong(song.getArtist(), song.getAlbum(), song.getTitle(), length, song.getGenres().join(","), QString::number(song.getBitrate()));
-            }
+         Q_FOREACH(const Album &album, EntitiesUtil::getAlbumsFromSongs(_currentSongs))
+         {
+             Q_FOREACH(const Song &song, album.getSongs())
+             {
+                 QString length = QString::number(song.getLength());
+                 length.insert(length.size()-2, ":");
+                 _collectionView->addSong(song.getArtist(), song.getAlbum(), song.getTitle(), length, song.getGenres().join(","), QString::number(song.getBitrate()));
+             }
+         }
 
-        _songsLoaded = true;
+         _songsLoaded = true;
      }
 }
 
@@ -88,13 +91,13 @@ void MusicViewer::showItemDetail(QModelIndex index)
     QString item = index.data().toString();
     if (_collectionView->currentView() == CollectionView::ARTIST)
     {
-        foreach(const Artist &artist, EntitiesUtil::getArtistsFromSongs(_currentSongs))
+        Q_FOREACH(const Artist &artist, EntitiesUtil::getArtistsFromSongs(_currentSongs))
         {
             if (artist.getName() == item)
             {
                 //show details of this artist
                 QList<QPair<QImage, QString> > albums;
-                foreach (const Album &album, artist.getAlbums())
+                 Q_FOREACH(const Album &album, artist.getAlbums())
                     albums.append(QPair<QImage, QString> (album.getCover(), album.getTitle()));
 
                 _collectionView->showArtistDetail(artist.getName(), albums);
@@ -104,7 +107,7 @@ void MusicViewer::showItemDetail(QModelIndex index)
     }
     else if (_collectionView->currentView() == CollectionView::ALBUM)
     {
-        foreach(const Album &album, EntitiesUtil::getAlbumsFromSongs(_currentSongs))
+        Q_FOREACH(const Album &album, EntitiesUtil::getAlbumsFromSongs(_currentSongs))
         {
             if (album.getArtist()+album.getTitle() == item)
             {
@@ -116,11 +119,11 @@ void MusicViewer::showItemDetail(QModelIndex index)
 
 void MusicViewer::slotLoadSongsFromAlbum(const QString& artist, const QString& album)
 {
-    foreach (const Album &a, EntitiesUtil::getAlbumsFromSongs(_currentSongs))
+    Q_FOREACH (const Album &a, EntitiesUtil::getAlbumsFromSongs(_currentSongs))
     {
         if (a.getArtist() == artist && a.getTitle() == album)
         {
-            foreach (const Song &song, a.getSongs())
+            Q_FOREACH (const Song &song, a.getSongs())
             {
                 QString length = QString::number(song.getLength());
                 length.insert(length.size()-2, ":");
@@ -158,7 +161,7 @@ void MusicViewer::showSimilarityScreen(const QStringList &songs)
 void MusicViewer::loadArtistForSimilarity()
 {
     QStringList artists;
-    foreach (const Artist &artist, EntitiesUtil::getArtistsFromSongs(_currentSongs))
+    Q_FOREACH (const Artist &artist, EntitiesUtil::getArtistsFromSongs(_currentSongs))
     {
         artists << artist.getName();
     }
@@ -169,7 +172,7 @@ void MusicViewer::loadArtistForSimilarity()
 void MusicViewer::loadAlbumForSimilarity()
 {
     QList<QPair<QImage, QString> > albums;
-    foreach (const Album &album, EntitiesUtil::getAlbumsFromSongs(_currentSongs))
+    Q_FOREACH (const Album &album, EntitiesUtil::getAlbumsFromSongs(_currentSongs))
     {
         albums.append(QPair<QImage, QString>(album.getCover(), album.getArtist() + " - " + album.getTitle()));
     }
@@ -180,11 +183,11 @@ void MusicViewer::loadAlbumForSimilarity()
 void MusicViewer::slotLoadAlbumsFromArtist(const QString &artist)
 {
     QList<QPair<QImage, QString> > albums;
-    foreach (const Artist &a, EntitiesUtil::getArtistsFromSongs(_currentSongs))
+    Q_FOREACH (const Artist &a, EntitiesUtil::getArtistsFromSongs(_currentSongs))
     {
         if (a.getName() == artist)
         {
-            foreach(const Album &album, a.getAlbums())
+           Q_FOREACH (const Album &album, a.getAlbums())
                 albums.append(QPair<QImage, QString>(album.getCover(), album.getTitle()));
 
             break;
@@ -199,7 +202,7 @@ void MusicViewer::slotGetArtistSimilarity(const QString &artist)
     QList<Artist> similarArtist;
     QList<QPair<QImage, QString> > similar;
 
-    foreach (const Artist &a, EntitiesUtil::getArtistsFromSongs(_currentSongs))
+    Q_FOREACH (const Artist &a, EntitiesUtil::getArtistsFromSongs(_currentSongs))
     {
         if (a.getName() == artist)
         {
@@ -208,7 +211,7 @@ void MusicViewer::slotGetArtistSimilarity(const QString &artist)
         }
     }
 
-    foreach (const Artist &a, similarArtist)
+    Q_FOREACH (const Artist &a, similarArtist)
         similar.append(QPair<QImage, QString>(QImage(":icons/icons/artist.png"), a.getName()));
 
     _similarityView->setSimilar(similar);
@@ -219,7 +222,7 @@ void MusicViewer::slotGetAlbumSimilarity(const QString &artist, const QString &a
     QList<Album> similarAlbums;
     QList<QPair<QImage, QString> > similar;
 
-    foreach (const Album &a, EntitiesUtil::getAlbumsFromSongs(_currentSongs))
+    Q_FOREACH (const Album &a, EntitiesUtil::getAlbumsFromSongs(_currentSongs))
     {
         if (a.getArtist() == artist && a.getTitle() == album)
         {
@@ -228,7 +231,7 @@ void MusicViewer::slotGetAlbumSimilarity(const QString &artist, const QString &a
         }
     }
 
-    foreach (const Album &a, similarAlbums)
+    Q_FOREACH (const Album &a, similarAlbums)
         similar.append(QPair<QImage, QString>(a.getCover(), a.getArtist()+" - "+a.getTitle()));
 
     _similarityView->setSimilar(similar);
@@ -238,7 +241,7 @@ void MusicViewer::slotGetSongDataAndPlay(const QString &artist, const QString &a
 {
     QPair<Song, QString> songFile = EntitiesUtil::getSongAndFileFromSongList(_currentSongs, artist, album, song);
 
-    emit playSong(songFile.first, songFile.second);
+    Q_EMIT playSong(songFile.first, songFile.second);
 }
 
 void MusicViewer::close()

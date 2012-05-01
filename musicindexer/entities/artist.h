@@ -16,7 +16,7 @@ public:
     Artist(const QString& name, const QList<Album> &albums)
     {
         _name = name;
-        foreach (const Album &a, albums)
+        Q_FOREACH (const Album &a, albums)
             _albums.insert(a.getTitle(), new Album(a));
     }
 

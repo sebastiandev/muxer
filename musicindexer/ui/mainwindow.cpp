@@ -112,7 +112,7 @@ bool MainWindow::eventFilter(QObject *obj, QEvent *e)
 
 void MainWindow::searchClicked()
 {
-    emit searchTrigger(ui.leInput->text());
+    Q_EMIT searchTrigger(ui.leInput->text());
 }
 
 void MainWindow::slotAskForDirectory(QString *dir)

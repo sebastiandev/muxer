@@ -6,8 +6,9 @@
 
 QT       += core
 
-TARGET   =  musicIndexer
+TARGET   =  muxer
 CONFIG   += order
+
 
 TEMPLATE = app
 
@@ -23,6 +24,10 @@ include (ui/ui.pri)
 include (controller/controller.pri)
 include (entities/entities.pri)
 include (database/database.pri)
+
+win32 {
+    QMAKE_CXXFLAGS += -DQT_NO_KEYWORDS
+}
 
 
 

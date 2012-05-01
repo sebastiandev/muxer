@@ -177,7 +177,7 @@ void SWidget::showArtistDetail(const QString &artist, const QList<QPair<QImage, 
 
 void SWidget::slotAlbumSelected(const QString &album)
 {
-    emit albumSelectedFromArtistDetail(ui.listWidget->selectedItems().first()->text(), album);
+    Q_EMIT albumSelectedFromArtistDetail(ui.listWidget->selectedItems().first()->text(), album);
 }
 
 void SWidget::slotSongSelected(int row, int col)
@@ -188,7 +188,7 @@ void SWidget::slotSongSelected(int row, int col)
         QString artist = ui.tableWidget->item(row, 2)->text();
         QString album  = ui.tableWidget->item(row, 3)->text();
 
-        emit songSelected(artist, album, song);
+        Q_EMIT songSelected(artist, album, song);
     }
 }
 

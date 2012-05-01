@@ -6,8 +6,8 @@
 #include <QDir>
 #include <QDirIterator>
 
-#include <taglib/fileref.h>
-#include <taglib/tag.h>
+#include <fileref.h>
+#include <tag.h>
 #include "util/QFileUtils.h"
 #include "util/entitiesutil.h"
 #include "queryparser.h"
@@ -22,6 +22,7 @@ MusicManager* MusicManager::instance = NULL;
 MusicManager::~MusicManager()
 {
     _db.close();
+    delete instance;
 }
 
 MusicManager::MusicManager(SongIndexer songIndexer, SongFinder songFinder)
@@ -91,7 +92,7 @@ void MusicManager::addSongsFromDirectory(QString dirPath)
         if (!taglibFile.isNull() && taglibFile.tag())
         {
             //qDebug() << "Indexing file: " << file;
-            emit indexing(file, ++count, amountOfFiles);
+            Q_EMIT indexing(file, ++count, amountOfFiles);
 
             TagLib::Tag *tag = taglibFile.tag();
             song = Song(tag->title().toCString(), tag->album().toCString(), tag->artist().toCString(), QString::number(tag->year()), tag->genre().toCString(), "", 100, "");
@@ -110,7 +111,7 @@ void MusicManager::addSongsFromDirectory(QString dirPath)
             if (song.getAlbum()  != currentAlbum.getTitle())
             {
                 if (!currentAlbum.getTitle().isEmpty())
-                {                    
+                {
                     SimilarityManager::manager().addAlbum(currentAlbumPath, currentAlbum);
                     currentAlbum.clear();
                 }
@@ -138,7 +139,7 @@ void MusicManager::addSongsFromDirectory(QString dirPath)
 
 void MusicManager::addSongs(QStringList songsPath)
 {
-    foreach(const QString &song, songsPath)
+    Q_FOREACH(const QString &song, songsPath)
         addSongsFromDirectory(song);
 }
 

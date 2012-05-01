@@ -30,11 +30,11 @@ public:
     int  size      () { return _playlist.size();}
 
 
-signals:
+Q_SIGNALS:
 
     void playSong(const Song&, const QString&);
 
-private slots:
+private Q_SLOTS:
 
     void slotSongSelected(int row, int col);
 

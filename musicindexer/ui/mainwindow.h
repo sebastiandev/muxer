@@ -15,13 +15,13 @@ class MainWindow : public QWidget
 public:
     explicit MainWindow(QWidget *parent = 0);
 
-signals:
+Q_SIGNALS:
     void searchTrigger(const QString&);
     void addResourcesTrigger();
     void getCollectionTrigger();
     void showSimilarityTrigger();
 
-public slots:
+public Q_SLOTS:
     void slotAskForDirectory(QString *dir);
     void slotShowSongs(const QStringList &songlist);
     void slotShowSimilarity(const QStringList &songlist);
@@ -30,7 +30,7 @@ public slots:
     void slotUpdateProgress(int progress);
     void slotHideProgress();
 
-private slots:
+private Q_SLOTS:
     void highlightInput();
     void searchClicked();
     void slotClose();

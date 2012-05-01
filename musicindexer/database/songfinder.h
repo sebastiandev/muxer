@@ -1,7 +1,7 @@
 #ifndef SONGFINDER_H
 #define SONGFINDER_H
 
-#include "xapian.h"
+#include <xapian.h>
 #include <QStringList>
 
 class SongFinder

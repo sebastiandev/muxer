@@ -23,15 +23,15 @@ public:
     void showSimilarityScreen(const QStringList &songs);
 
 
-signals:
+Q_SIGNALS:
 
     void playSong(const Song&, const QString&);
 
-public slots:
+public Q_SLOTS:
 
     void close();
 
-private slots:
+private Q_SLOTS:
 
     //void changeToAlbumView();
     void changeToSongView        ();

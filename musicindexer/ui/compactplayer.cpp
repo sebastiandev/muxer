@@ -144,7 +144,8 @@ int CompactPlayer::songsInQueue()
 {
     // if a song is been played we consider the song to be in the queue
     int putPLayingAsQueue = _mediaObject->state() == Phonon::PlayingState ? 1 : 0;
-    return (_playlist->size() - _playlist->currentSong() + putPLayingAsQueue);
+    int queueSize = _playlist->size() - _playlist->currentSong() + putPLayingAsQueue;
+    return queueSize;
 }
 
 void CompactPlayer::aboutToFinish()

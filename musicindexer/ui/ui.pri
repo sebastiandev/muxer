@@ -12,9 +12,11 @@ HEADERS += \
     ui/similarity.h \
     ui/albuminfo.h \
     ui/compactplayer.h \
-    ui/compactplaylist.h
-
-
+    ui/compactplaylist.h \
+    ui/fullscreenview.h \
+    ui/importview.h \
+    ui/qtwin.h \
+    ui/musicview.h
 
 SOURCES += \
     ui/mainwindow.cpp \
@@ -27,9 +29,11 @@ SOURCES += \
     ui/similarity.cpp \
     ui/albuminfo.cpp \
     ui/compactplayer.cpp \
-    ui/compactplaylist.cpp
-
-
+    ui/compactplaylist.cpp \
+    ui/fullscreenview.cpp \
+    ui/importview.cpp \
+    ui/qtwin.cpp \
+    ui/musicview.cpp
 
 FORMS += \
     ui/collectionview.ui \
@@ -40,7 +44,10 @@ FORMS += \
     ui/similarity.ui \
     ui/albuminfo.ui \
     ui/compactplayer.ui \
-    ui/compactplaylist.ui
+    ui/compactplaylist.ui \
+    ui/fullscreenview.ui \
+    ui/importview.ui \
+    ui/musicview.ui
 
 
 RESOURCES += \

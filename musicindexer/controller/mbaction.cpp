@@ -32,11 +32,11 @@ void MBAction::Go()
 void MBAction::addAndEmitProgress(int delta)
 {
     _actionProgress = (_actionProgress + delta > 100) ? 100 : _actionProgress + delta;
-    emit actionProgress(_actionProgress);
+    Q_EMIT actionProgress(_actionProgress);
 }
 
 void MBAction::setAndEmitProgress(int absolute)
 {
     _actionProgress = absolute > 100 ? 100 : absolute;
-    emit actionProgress(_actionProgress);
+    Q_EMIT actionProgress(_actionProgress);
 }

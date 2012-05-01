@@ -73,7 +73,7 @@ void SimilarityView::setArtists(const QStringList &artists)
     ui->listWidgetArtist->clear();
     ui->btSearchAlbum->setDisabled(true);
 
-    foreach (const QString &artist, artists)
+     Q_FOREACH(const QString &artist, artists)
         ui->listWidgetArtist->addItem(new QListWidgetItem(artist));
 }
 
@@ -105,15 +105,15 @@ void SimilarityView::setSimilar(const QList<QPair<QImage, QString> > &items)
 void SimilarityView::slotArtistSelected(QModelIndex index)
 {
     QString artist = index.data().toString();
-    emit artistSelected(artist);
+    Q_EMIT artistSelected(artist);
 }
 
 void SimilarityView::slotArtistSearch()
 {
-    emit artistSimilarityRequested(ui->listWidgetArtist->selectedItems().first()->text());
+    Q_EMIT artistSimilarityRequested(ui->listWidgetArtist->selectedItems().first()->text());
 }
 void SimilarityView::slotAlbumSearch()
 {
     if (ui->listWidgetAlbum->selectedItems().size() > 0)
-        emit albumSimilarityRequested(ui->listWidgetArtist->selectedItems().first()->text(), ui->listWidgetAlbum->selectedItems().first()->text());
+        Q_EMIT albumSimilarityRequested(ui->listWidgetArtist->selectedItems().first()->text(), ui->listWidgetAlbum->selectedItems().first()->text());
 }

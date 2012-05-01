@@ -9,7 +9,8 @@ CompactPlaylist::CompactPlaylist(QWidget *parent) :
 
     setAttribute(Qt::WA_TranslucentBackground, true);
 
-    _currentSong = 0;
+    _currentSong = -1;
+    _playlist.clear();
 
     ui->tableWidget->horizontalHeader()->setResizeMode(0, QHeaderView::Stretch);
     ui->tableWidget->horizontalHeader()->setResizeMode(1, QHeaderView::Interactive);
@@ -57,7 +58,7 @@ void CompactPlaylist::slotSongSelected(int row, int col)
     }
     else
     {
-        emit playSong(_playlist.value(key).first, _playlist.value(key).second);
+        Q_EMIT playSong(_playlist.value(key).first, _playlist.value(key).second);
         _currentSong = row;
     }
 }
@@ -74,7 +75,7 @@ void CompactPlaylist::nextSong()
         _currentSong++;
         QString key = ui->tableWidget->item(_currentSong, 1)->text() + ui->tableWidget->item(_currentSong, 2)->text() + ui->tableWidget->item(_currentSong, 0)->text();
 
-        emit playSong(_playlist.value(key).first, _playlist.value(key).second);
+        Q_EMIT playSong(_playlist.value(key).first, _playlist.value(key).second);
     }
 }
 

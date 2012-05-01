@@ -27,7 +27,7 @@ public:
     int getAverageTempo() const
     {
         int tempo=0;
-        foreach(const Song &song, _songs)
+        Q_FOREACH(const Song &song, _songs)
             tempo += song.getTempo();
 
         return _songs.size() > 0 ? tempo/_songs.size() : 0;//if no songs, then avg is 0
@@ -50,7 +50,7 @@ public:
 private:
 
     QString     _title, _year, _artist;
-    QList<Song> _songs;    
+    QList<Song> _songs;
     QImage      _cover;
 };
 
