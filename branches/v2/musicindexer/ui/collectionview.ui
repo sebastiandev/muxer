@@ -1,0 +1,445 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>CollectionView</class>
+ <widget class="QWidget" name="CollectionView">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>781</width>
+    <height>486</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <property name="accessibleDescription">
+   <string>Music collection view</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true"/>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QWidget" name="container" native="true">
+     <property name="styleSheet">
+      <string notr="true">#container{
+border-radius: 5px;
+border-top: 4px solid rgb(143, 195, 227);
+border-left: 1px solid  rgb(177, 177, 177);
+border-right: 1px solid rgb(177, 177, 177);
+border-bottom: 1px solid rgb(177, 177, 177);
+background-color:rgba(210, 210, 210, 204);
+}
+</string>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_2">
+      <property name="leftMargin">
+       <number>0</number>
+      </property>
+      <property name="topMargin">
+       <number>4</number>
+      </property>
+      <property name="rightMargin">
+       <number>0</number>
+      </property>
+      <item>
+       <widget class="QWidget" name="wcontrol" native="true">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">#wcontrol{
+border-top: 1px solid rgb(151, 151, 151);
+}</string>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout">
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <item>
+          <spacer name="hLeftSpacer">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QWidget" name="wButtons" native="true">
+           <property name="styleSheet">
+            <string notr="true">#wButtons{
+border-bottom-left-radius: 5px;
+border-bottom-right-radius: 3px;
+border-left: 1px solid rgb(151, 151, 151);
+border-right: 1px solid rgb(151, 151, 151);
+border-bottom: 1px solid rgb(151, 151, 151);
+background-color: rgb(143, 195, 227);
+}
+#btArtistView{ border: 0px; background-color: transparent;}
+#btArtistView::hover{color: white;}
+#btArtistView::pressed{}
+
+#btAlbumView{ border: 0px; background-color: transparent;}
+#btAlbumView::hover{color: white;}
+#btAlbumView::pressed{}
+
+#btGenreView{ border: 0px; background-color: transparent;}
+#btGenreView::hover{color: white;}
+#btGenreView::pressed{}
+
+#btSongView{ border: 0px; background-color: transparent;}
+#btSongView::hover{color: white;}
+#btSongView::pressed{}
+</string>
+           </property>
+           <layout class="QHBoxLayout" name="horizontalLayout_2">
+            <property name="spacing">
+             <number>0</number>
+            </property>
+            <property name="margin">
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="QPushButton" name="btSongView">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="autoFillBackground">
+               <bool>false</bool>
+              </property>
+              <property name="text">
+               <string>by Song</string>
+              </property>
+              <property name="flat">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="btAlbumView">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="autoFillBackground">
+               <bool>false</bool>
+              </property>
+              <property name="text">
+               <string>by Album</string>
+              </property>
+              <property name="flat">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="btArtistView">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="autoFillBackground">
+               <bool>false</bool>
+              </property>
+              <property name="text">
+               <string>by Artist</string>
+              </property>
+              <property name="flat">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="btGenreView">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="autoFillBackground">
+               <bool>false</bool>
+              </property>
+              <property name="text">
+               <string>by Genre</string>
+              </property>
+              <property name="flat">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item>
+          <spacer name="hRightSpacer">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeType">
+            <enum>QSizePolicy::Expanding</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QPushButton" name="btHide">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">#btHide{
+border: 0px;
+background-color: transparent;
+font-size= 12px;
+font-style: bold;
+color: black;
+}
+
+#btHide::hover{background-color: rgb(143, 195, 227);}</string>
+           </property>
+           <property name="text">
+            <string>--</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="btClose">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>15</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>15</width>
+             <height>16777215</height>
+            </size>
+           </property>
+           <property name="autoFillBackground">
+            <bool>false</bool>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">#btClose {
+/*background-color:  rgb(143, 195, 227);*/
+border: 0px;
+background-color: transparent;
+color:  black;
+font-size: 12px;
+font-style: bold;
+}
+
+#btClose::hover{background-color: rgb(143, 195, 227);}</string>
+           </property>
+           <property name="text">
+            <string>X</string>
+           </property>
+           <property name="flat">
+            <bool>false</bool>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <widget class="QListWidget" name="listWidget">
+        <property name="styleSheet">
+         <string notr="true">#listWidget{
+	border-radius: 4px;
+    background-color: transparent;	 
+    show-decoration-selected: 0;
+	padding-left: 40px;
+   	padding-right: 40px;
+}
+
+#listWidget::item:selected {
+	 border: none;
+ 	 background-color:rgba(240, 240, 240, 100);
+     color: black;     
+ }</string>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::NoFrame</enum>
+        </property>
+        <property name="lineWidth">
+         <number>0</number>
+        </property>
+        <property name="editTriggers">
+         <set>QAbstractItemView::NoEditTriggers</set>
+        </property>
+        <property name="showDropIndicator" stdset="0">
+         <bool>false</bool>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>50</width>
+          <height>50</height>
+         </size>
+        </property>
+        <property name="flow">
+         <enum>QListView::LeftToRight</enum>
+        </property>
+        <property name="isWrapping" stdset="0">
+         <bool>true</bool>
+        </property>
+        <property name="resizeMode">
+         <enum>QListView::Adjust</enum>
+        </property>
+        <property name="spacing">
+         <number>5</number>
+        </property>
+        <property name="viewMode">
+         <enum>QListView::IconMode</enum>
+        </property>
+        <property name="wordWrap">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QTableWidget" name="tableWidget">
+        <property name="styleSheet">
+         <string notr="true">#tableWidget{
+background-color: transparent;
+margin-left: 20px;
+margin-right: 20px;
+}
+
+QHeaderView::section {
+     background-color: rgb(132, 132, 132);
+	color: white;
+ }
+</string>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::NoFrame</enum>
+        </property>
+        <property name="editTriggers">
+         <set>QAbstractItemView::NoEditTriggers</set>
+        </property>
+        <property name="showDropIndicator" stdset="0">
+         <bool>false</bool>
+        </property>
+        <property name="dragDropOverwriteMode">
+         <bool>false</bool>
+        </property>
+        <property name="selectionMode">
+         <enum>QAbstractItemView::SingleSelection</enum>
+        </property>
+        <property name="selectionBehavior">
+         <enum>QAbstractItemView::SelectRows</enum>
+        </property>
+        <property name="verticalScrollMode">
+         <enum>QAbstractItemView::ScrollPerPixel</enum>
+        </property>
+        <property name="horizontalScrollMode">
+         <enum>QAbstractItemView::ScrollPerPixel</enum>
+        </property>
+        <property name="showGrid">
+         <bool>false</bool>
+        </property>
+        <property name="wordWrap">
+         <bool>false</bool>
+        </property>
+        <property name="columnCount">
+         <number>6</number>
+        </property>
+        <attribute name="horizontalHeaderCascadingSectionResizes">
+         <bool>false</bool>
+        </attribute>
+        <attribute name="horizontalHeaderHighlightSections">
+         <bool>false</bool>
+        </attribute>
+        <attribute name="horizontalHeaderStretchLastSection">
+         <bool>false</bool>
+        </attribute>
+        <attribute name="verticalHeaderVisible">
+         <bool>false</bool>
+        </attribute>
+        <attribute name="verticalHeaderHighlightSections">
+         <bool>false</bool>
+        </attribute>
+        <column>
+         <property name="text">
+          <string>Song</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Artist</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Album</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Duration</string>
+         </property>
+         <property name="textAlignment">
+          <set>AlignHCenter|AlignVCenter|AlignCenter</set>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Genres</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Quality</string>
+         </property>
+         <property name="textAlignment">
+          <set>AlignHCenter|AlignVCenter|AlignCenter</set>
+         </property>
+        </column>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

@@ -1,0 +1,344 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>ImportView</class>
+ <widget class="QWidget" name="ImportView">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1039</width>
+    <height>670</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="margin">
+    <number>0</number>
+   </property>
+   <item>
+    <widget class="QWidget" name="header" native="true">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Minimum">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">#header {
+/*	border-bottom: 3px solid grey;*/
+}</string>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_2">
+      <property name="spacing">
+       <number>0</number>
+      </property>
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
+      <item>
+       <widget class="QLabel" name="title">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="font">
+         <font>
+          <family>Microsoft PhagsPa</family>
+          <pointsize>18</pointsize>
+          <weight>75</weight>
+          <bold>true</bold>
+          <underline>false</underline>
+         </font>
+        </property>
+        <property name="text">
+         <string>Add Music</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="Line" name="line">
+        <property name="styleSheet">
+         <string notr="true">color: rgb(74, 74, 74);</string>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Plain</enum>
+        </property>
+        <property name="lineWidth">
+         <number>2</number>
+        </property>
+        <property name="midLineWidth">
+         <number>0</number>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QWidget" name="browser" native="true">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="styleSheet">
+      <string notr="true"/>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <property name="topMargin">
+       <number>20</number>
+      </property>
+      <item>
+       <widget class="QWidget" name="leftColumn" native="true">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>300</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">#leftColumn {
+	border: 1px solid grey;
+	border-radius: 4px;
+	background-color: rgba(95, 95, 95, 100);
+	color: gray;
+}
+
+</string>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_3">
+         <item>
+          <widget class="QLabel" name="label">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="font">
+            <font>
+             <family>Microsoft PhagsPa</family>
+             <pointsize>11</pointsize>
+             <italic>false</italic>
+             <stylestrategy>PreferAntialias</stylestrategy>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">color: rgb(255, 255, 255);
+</string>
+           </property>
+           <property name="text">
+            <string>Search for the folder that has the music you want to add to the collection. You can choose a single album folder or a whole collection of cds.</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignJustify|Qt::AlignTop</set>
+           </property>
+           <property name="wordWrap">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_2">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="font">
+            <font>
+             <family>Microsoft PhagsPa</family>
+             <pointsize>11</pointsize>
+             <stylestrategy>PreferAntialias</stylestrategy>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">color: rgb(255, 255, 255);
+</string>
+           </property>
+           <property name="text">
+            <string>Once you import your music, you will be able to search for it by artist, album, song, year and genre or just browse the entire collection. You wont ever have to remember where those files were stored, or from which album that song was.</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignJustify|Qt::AlignTop</set>
+           </property>
+           <property name="wordWrap">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_3">
+           <property name="font">
+            <font>
+             <family>Microsoft PhagsPa</family>
+             <pointsize>11</pointsize>
+             <stylestrategy>PreferAntialias</stylestrategy>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">color: rgb(255, 255, 255);
+</string>
+           </property>
+           <property name="text">
+            <string>Take in consideration that the importing process takes some time, and that you can import diferent folders as many times as you want.</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignJustify|Qt::AlignTop</set>
+           </property>
+           <property name="wordWrap">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_4">
+           <property name="font">
+            <font>
+             <family>Microsoft PhagsPa</family>
+             <pointsize>11</pointsize>
+             <stylestrategy>PreferAntialias</stylestrategy>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">padding-top: 20px;
+color: rgb(255, 255, 255);
+</string>
+           </property>
+           <property name="text">
+            <string>Select the folder you want to import and click the &quot;OK&quot; button</string>
+           </property>
+           <property name="scaledContents">
+            <bool>false</bool>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignJustify|Qt::AlignTop</set>
+           </property>
+           <property name="wordWrap">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="verticalSpacer">
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>20</width>
+             <height>40</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QDialogButtonBox" name="buttonBox">
+           <property name="standardButtons">
+            <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+           </property>
+           <property name="centerButtons">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <widget class="QColumnView" name="columnView">
+        <property name="styleSheet">
+         <string notr="true">#columnView {
+	border: 4px solid grey;
+	border-radius: 4px;
+	background-color:transparent;
+	alternate-background-color: transparent;
+/*	padding: 4px;*/
+}
+
+QListView{
+	/*background-color:rgba(150, 150, 150, 200);*/
+	background-color: transparent;
+	border: 0.8px solid rgb(226, 226, 226);
+	padding: 4px;
+	/*alternate-background-color: transparent;*/
+	show-decoration-selected: 0;
+}
+
+ QListView::item:selected {
+     border: 1px solid rgb(123, 169, 255);
+ }
+
+ QListView::item:selected:!active {
+     background: rgb(199, 215, 240);
+ }
+
+ QListView::item:selected:active {
+     background: rgb(102, 150, 212);
+ }
+
+ QListView::item:hover {
+     background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                 stop: 0 #FAFBFE, stop: 1 #DCDEF1);
+ }
+</string>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::Box</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Raised</enum>
+        </property>
+        <property name="alternatingRowColors">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QWidget" name="widget" native="true">
+     <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <item>
+       <widget class="QProgressBar" name="progressBar">
+        <property name="enabled">
+         <bool>true</bool>
+        </property>
+        <property name="value">
+         <number>24</number>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

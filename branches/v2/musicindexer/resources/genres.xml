@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<genres>
+
+<rock display="Rock">
+    <sub-genres>
+        <rock_roll display="Rock &amp; Roll"></rock_roll>
+        <hard_rock display="Hard Rock"></hard_rock>
+        <progressive_rock display="Progressive Rock"></progressive_rock>
+    </sub-genres>
+</rock>
+
+<metal display="Metal">
+    <sub-genres>
+        <heavy_metal display="Heavy Metal"></heavy_metal>
+        <trash_metal display="Trash Metal"></trash_metal>
+        <symphonic_metal display="Symphonic Metal"></symphonic_metal>
+        <gothic_metal display="Gothic Metal"></gothic_metal>
+    </sub-genres>
+</metal>
+
+<rythm_blues display="Rythm &amp; Blues">
+    <variants>
+        <r_b display="R&amp;B"></r_b>
+    <!-- <![CDATA[ r_b ]]> -->
+    </variants>
+</rythm_blues>
+
+<jazz display="Jazz">
+    <sub-genres>
+        <bebop       display="Bebop"></bebop>
+        <hardbop     display="Hardbop"></hardbop>
+        <swing       display="Swing"></swing>
+        <free_jazz   display="Free Jazz"></free_jazz>
+        <latin_jazz  display="Latin Jazz"></latin_jazz>
+        <gypsy_jazz  display="Gypsy Jazz"></gypsy_jazz>
+        <smooth_jazz display="Smooth Jazz"></smooth_jazz>
+
+    </sub-genres>
+</jazz>
+
+<tango display="Tango"></tango>
+
+<blues display="Blues"></blues>
+
+<fusion display="Fusion"></fusion>
+
+<salsa display="Salsa"></salsa>
+
+<zamba display="Zamba"></zamba>
+
+<folklore display="Folklore"></folklore>
+
+<bolero display="Bolero"></bolero>
+
+<pop display="Pop"></pop>
+
+</genres>
