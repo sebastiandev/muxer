@@ -19,14 +19,17 @@ FullScreenView::FullScreenView(QWidget *parent) :
     ui->searchBox->setGraphicsEffect(effect);
 
     _importView.reset(new ImportView(this));
-    _musicView.reset(new MusicView(this));
     _importView->hide();
+
+    _musicView.reset(new MusicView(this));
     _musicView->hide();
 
-    connect(ui->btnAddMusic, SIGNAL(clicked()), this, SLOT(importMusic()));
-    connect(ui->btnCollection, SIGNAL(clicked()), this, SLOT(showMusic()));
-    connect(ui->btnQuit, SIGNAL(clicked()), this, SIGNAL(quit()));
-    connect(ui->btnQuit, SIGNAL(clicked()), this, SLOT(close()));
+    connect(ui->btnAddMusic   , SIGNAL(clicked()), this, SLOT(slotImportMusic()));
+    connect(ui->btnCollection , SIGNAL(clicked()), this, SIGNAL(showCollectionRequest()));
+    connect(ui->btnQuit       , SIGNAL(clicked()), this, SIGNAL(quit()));
+    connect(ui->btnQuit       , SIGNAL(clicked()), this, SLOT(close()));
+
+    connect(_importView.data(), SIGNAL(importFolderSelected(QString&)), this, SIGNAL(importFolderRequest(QString&)));
 }
 
 FullScreenView::~FullScreenView()
@@ -62,7 +65,7 @@ bool FullScreenView::eventFilter(QObject *obj, QEvent *e)
     return false;
 }
 
-void FullScreenView::importMusic()
+void FullScreenView::slotImportMusic()
 {
     QLayoutItem* item = ui->body->layout()->takeAt(0);
     if (item && item->widget())
@@ -72,7 +75,7 @@ void FullScreenView::importMusic()
     _importView->show();
 }
 
-void FullScreenView::showMusic()
+void FullScreenView::slotShowMusic(const QStringList &songs)
 {
     QLayoutItem* item = ui->body->layout()->takeAt(0);
     if (item && item->widget())
@@ -81,3 +84,22 @@ void FullScreenView::showMusic()
     ui->body->layout()->addWidget(_musicView.data());
     _musicView->show();
 }
+
+void FullScreenView::slotShowProgress()
+{
+    if (_importView->isVisible())
+        _importView->showProgress();
+}
+
+void FullScreenView::slotUpdateProgress(int val)
+{
+    if (_importView->isVisible())
+        _importView->updateProgress(val);
+}
+
+void FullScreenView::slotHideProgress()
+{
+    if (_importView->isVisible())
+        _importView->hideProgress();
+}
+

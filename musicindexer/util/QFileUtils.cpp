@@ -89,20 +89,15 @@ void QFileUtils::countFilesInDir(const QString &path, const QStringList &filter,
     }
     else
     {
-        bool isOk = false;
-
         Q_FOREACH (const QString &f, filter)
         {
             QRegExp reg(f); reg.setPatternSyntax(QRegExp::Wildcard);
             if (path.contains(reg))
             {
-                isOk = true;
+                count++;
                 break;
             }
         }
-
-        if (isOk)
-            count++;
     }
 }
 

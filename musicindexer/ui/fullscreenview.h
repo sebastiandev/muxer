@@ -16,18 +16,25 @@ class FullScreenView;
 class FullScreenView : public QWidget
 {
     Q_OBJECT
-    
+
 public:
     explicit FullScreenView(QWidget *parent = 0);
     ~FullScreenView();
-    
+
 public Q_SLOTS:
 
-    void importMusic();
-    void showMusic  ();
+    void slotImportMusic();
+    void slotShowMusic(const QStringList&);
+
+    void slotShowProgress  ();
+    void slotUpdateProgress(int);
+    void slotHideProgress  ();
+
 
 Q_SIGNALS:
 
+    void importFolderRequest(QString&);
+    void showCollectionResquest();
     void quit();
 
 protected:
@@ -41,6 +48,7 @@ private:
 
     QPoint _dragPosition;
     QGraphicsBlurEffect *_blurEffect;
+
     QScopedPointer<ImportView> _importView;
     QScopedPointer<MusicView>  _musicView;
 };

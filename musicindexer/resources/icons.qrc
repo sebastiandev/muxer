@@ -29,8 +29,6 @@
         <file>icons/remove.png</file>
         <file>icons/playlist.png</file>
         <file>icons/cd_128.png</file>
-        <file>icons/comunidad_128.png</file>
-        <file>icons/download_128.png</file>
         <file>icons/file_128.png</file>
         <file>icons/repeat_128.png</file>
         <file>icons/share_128.png</file>
@@ -39,7 +37,6 @@
         <file>icons/star_128.png</file>
         <file>icons/star_filled_128.png</file>
         <file>icons/user_128.png</file>
-        <file>icons/video_128.png</file>
         <file>icons/volumen_128.png</file>
         <file>icons/volumen2_128.png</file>
         <file>icons/add_folder.png</file>

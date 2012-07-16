@@ -33,10 +33,10 @@ public Q_SLOTS:
 
     void slotImportStarted    ();
     void slotActionProgress   (int);
-    void slotActionError      (const QString &);
+    void slotActionError      (const QString&);
     void slotActionEnded      (bool);
-    void slotSearch           (const QString &query);
-    void slotAddResources     ();
+    void slotSearch           (const QString&);
+    void slotAddResources     (QString&);
     void slotCollectionClicked();
     void slotSimilarityClicked();
     void slotSearchFinished   (const QStringList&);
@@ -44,13 +44,13 @@ public Q_SLOTS:
 
 private Q_SLOTS:
 
-    void slotSongWithEmptyTerms(const QString& file, const QString& msg);
+    void slotTrackSongWithEmptyTerms(const QString& file, const QString& msg);
 
 
 private:
 
     void connectStandarActionSignals(MBAction * action);
-    void loadPendingFiles();
+    void loadPendingSongsToImport();
 
     QScopedPointer<ILogger>      _logger;
     //QScopedPointer<MainWindow>   _mainwindow;

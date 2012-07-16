@@ -34,9 +34,31 @@ ImportView::ImportView(QWidget *parent) :
 
     ui->columnView->setModel(model.data());
     ui->columnView->show();
+
+    connect(ui->buttonBox, SIGNAL(accepted()), this, SLOT(folderSelected()));
 }
 
 ImportView::~ImportView()
 {
     delete ui;
+}
+
+void ImportView::showProgress()
+{
+    ui->progressBar->show();
+}
+
+void ImportView::updateProgress(int val)
+{
+    ui->progressBar->setValue(val);
+}
+
+void ImportView::hideProgress()
+{
+    ui->progressBar->hide();
+}
+
+void ImportView::folderSelected()
+{
+    Q_EMIT importFolderSelected(model->filePath(ui->columnView->currentIndex()));
 }

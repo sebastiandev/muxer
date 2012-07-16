@@ -10,7 +10,7 @@ ActionImport::ActionImport(QStringList list):_filesToImport(list)
 }
 ActionImport::ActionImport(QDir dir):_dirToImport(dir)
 {
-    connect(&MusicManager::manager(), SIGNAL(indexing(QString,int ,int)), this, SLOT(calculateProgress(QString, int, int)), Qt::DirectConnection);
+    connect(&MusicManager::manager(), SIGNAL(indexing(QString,int ,int)), this, SLOT(slotCalculateProgress(QString, int, int)), Qt::DirectConnection);
     connect(&MusicManager::manager(), SIGNAL(songWithEmptyTerms(QString,QString)), this, SIGNAL(songWithEmptyTerms(QString,QString)), Qt::DirectConnection);
 }
 

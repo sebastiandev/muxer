@@ -16,7 +16,8 @@ HEADERS += \
     ui/fullscreenview.h \
     ui/importview.h \
     ui/qtwin.h \
-    ui/musicview.h
+    ui/musicview.h \
+    ui/songview.h
 
 SOURCES += \
     ui/mainwindow.cpp \
@@ -33,7 +34,8 @@ SOURCES += \
     ui/fullscreenview.cpp \
     ui/importview.cpp \
     ui/qtwin.cpp \
-    ui/musicview.cpp
+    ui/musicview.cpp \
+    ui/songview.cpp
 
 FORMS += \
     ui/collectionview.ui \
@@ -47,7 +49,8 @@ FORMS += \
     ui/compactplaylist.ui \
     ui/fullscreenview.ui \
     ui/importview.ui \
-    ui/musicview.ui
+    ui/musicview.ui \
+    ui/songview.ui
 
 
 RESOURCES += \
@@ -56,6 +59,9 @@ RESOURCES += \
 OTHER_FILES += \
     resources/genres.xml \
     resources/config.conf
+
+
+
 
 
 

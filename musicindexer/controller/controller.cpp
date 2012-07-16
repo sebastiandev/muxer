@@ -31,16 +31,21 @@ void Controller::init(QWidget* view)
     //_mainwindow.reset(new MainWindow());
     _mainwindow.reset((FullScreenView*)view);
 
-    loadPendingFiles();
+    loadPendingSongsToImport();
 
     connect(_mainwindow.data(), SIGNAL(searchTrigger(const QString&)), this, SLOT(slotSearch(const QString&)));
-    connect(_mainwindow.data(), SIGNAL(addResourcesTrigger())        , this, SLOT(slotAddResources()));
-    connect(_mainwindow.data(), SIGNAL(getCollectionTrigger())       , this, SLOT(slotCollectionClicked()));
+    //connect(_mainwindow.data(), SIGNAL(addResourcesTrigger())        , this, SLOT(slotAddResources()));
+    connect(_mainwindow.data(), SIGNAL(importFolderRequest(QString&))       , this, SLOT(slotAddResources(QString&)));
+    //connect(_mainwindow.data(), SIGNAL(getCollectionTrigger())       , this, SLOT(slotCollectionClicked()));
+    connect(_mainwindow.data(), SIGNAL(showCollectionRequest())             , this, SLOT(slotCollectionClicked()));
     connect(_mainwindow.data(), SIGNAL(showSimilarityTrigger())      , this, SLOT(slotSimilarityClicked()));
     connect(_mainwindow.data(), SIGNAL(quit())                       , this, SLOT(slotShutDown()));
 
-    connect(this              , SIGNAL(showSearchResult(const QStringList&)), _mainwindow.data(), SLOT(slotShowSongs(const QStringList&)));
-    connect(this              , SIGNAL(showCollection  (const QStringList&)), _mainwindow.data(), SLOT(slotShowSongs(const QStringList&)));
+    //connect(this              , SIGNAL(showSearchResult(const QStringList&)), _mainwindow.data(), SLOT(slotShowSongs(const QStringList&)));
+    //connect(this              , SIGNAL(showCollection  (const QStringList&)), _mainwindow.data(), SLOT(slotShowSongs(const QStringList&)));
+    connect(this              , SIGNAL(showSearchResult(const QStringList&)), _mainwindow.data(), SLOT(slotShowMusic(const QStringList&)));
+    connect(this              , SIGNAL(showCollection  (const QStringList&)), _mainwindow.data(), SLOT(slotShowMusic(const QStringList&)));
+
     connect(this              , SIGNAL(showSimilarity  (const QStringList&)), _mainwindow.data(), SLOT(slotShowSimilarity(const QStringList&)));
     connect(this              , SIGNAL(showProgress())                      , _mainwindow.data(), SLOT(slotShowProgress()));
     connect(this              , SIGNAL(updateProgress(int))                 , _mainwindow.data(), SLOT(slotUpdateProgress(int)));
@@ -97,11 +102,10 @@ void Controller::slotSearchFinished(const QStringList &result)
 }
 
 
-void Controller::slotAddResources()
+void Controller::slotAddResources(QString &directory)
 {
-    QString directory;
-
-    Q_EMIT askForDirectory(&directory);
+    //QString directory;
+    //Q_EMIT askForDirectory(&directory);
 
     if (directory.isEmpty())
         return;
@@ -109,14 +113,14 @@ void Controller::slotAddResources()
     _actionImport.reset(new ActionImport(QDir(directory)));
 
     connect(_actionImport.data(), SIGNAL(actionStarted()) , this , SLOT(slotImportStarted()));
-    connect(_actionImport.data(), SIGNAL(songWithEmptyTerms(QString,QString)) , this , SLOT(slotSongWithEmptyTerms(QString, QString)));
+    connect(_actionImport.data(), SIGNAL(songWithEmptyTerms(QString,QString)) , this , SLOT(slotTrackSongWithEmptyTerms(QString, QString)));
 
     connectStandarActionSignals(_actionImport.data());
 
     _actionImport->execute();
 }
 
-void Controller::slotSongWithEmptyTerms(const QString &file, const QString &msg)
+void Controller::slotTrackSongWithEmptyTerms(const QString &file, const QString &msg)
 {
     _pendingSongs << QPair<QString, QString>(file, msg);
 }
@@ -131,7 +135,7 @@ void Controller::slotSimilarityClicked()
     Q_EMIT showSimilarity(MusicManager::manager().getAllSongs());
 }
 
-void Controller::loadPendingFiles()
+void Controller::loadPendingSongsToImport()
 {
     _pendingSongsFile.setFileName(ConfigurationManager::GetString("pendingFiles"));
     if (_pendingSongsFile.open(QIODevice::ReadWrite | QIODevice::Text))

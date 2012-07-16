@@ -147,102 +147,13 @@
      <layout class="QHBoxLayout" name="horizontalLayout_2">
       <item>
        <widget class="QWidget" name="wView" native="true">
-        <layout class="QGridLayout" name="gridLayout">
-         <item row="0" column="0">
-          <widget class="QTableWidget" name="tableWidget">
-           <property name="styleSheet">
-            <string notr="true">#tableWidget{
-	background-color: transparent;	
-	margin-left: 0px;
-	margin-right: 0px;
-
-}
-QHeaderView{
-	background-color: rgb(220, 220, 220);/*rgb(132, 132, 132);*/
-	border: 0px;
-	border-top-left-radius: 0px;
-	border-top-right-radius: 0px;
-}
-QHeaderView::section {
-    background-color: transparent;
-	 color: gray;
- }
-</string>
-           </property>
-           <property name="dragDropOverwriteMode">
-            <bool>false</bool>
-           </property>
-           <property name="showGrid">
-            <bool>false</bool>
-           </property>
-           <property name="sortingEnabled">
-            <bool>true</bool>
-           </property>
-           <property name="columnCount">
-            <number>7</number>
-           </property>
-           <attribute name="horizontalHeaderHighlightSections">
-            <bool>false</bool>
-           </attribute>
-           <attribute name="verticalHeaderVisible">
-            <bool>false</bool>
-           </attribute>
-           <attribute name="verticalHeaderHighlightSections">
-            <bool>false</bool>
-           </attribute>
-           <column>
-            <property name="textAlignment">
-             <set>AlignHCenter|AlignVCenter|AlignCenter</set>
-            </property>
-           </column>
-           <column>
-            <property name="text">
-             <string>Song</string>
-            </property>
-            <property name="textAlignment">
-             <set>AlignLeft|AlignVCenter</set>
-            </property>
-           </column>
-           <column>
-            <property name="text">
-             <string>Artist</string>
-            </property>
-            <property name="textAlignment">
-             <set>AlignHCenter|AlignVCenter|AlignCenter</set>
-            </property>
-           </column>
-           <column>
-            <property name="text">
-             <string>Album</string>
-            </property>
-           </column>
-           <column>
-            <property name="text">
-             <string>Genre</string>
-            </property>
-            <property name="textAlignment">
-             <set>AlignHCenter|AlignVCenter|AlignCenter</set>
-            </property>
-           </column>
-           <column>
-            <property name="text">
-             <string>Quality</string>
-            </property>
-            <property name="textAlignment">
-             <set>AlignHCenter|AlignVCenter|AlignCenter</set>
-            </property>
-           </column>
-           <column>
-            <property name="text">
-             <string>Length</string>
-            </property>
-            <property name="textAlignment">
-             <set>AlignHCenter|AlignVCenter|AlignCenter</set>
-            </property>
-           </column>
-          </widget>
-         </item>
-        </layout>
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <layout class="QGridLayout" name="gridLayout"/>
        </widget>
       </item>
       <item>
@@ -268,7 +179,6 @@ QHeaderView::section {
        </widget>
       </item>
      </layout>
-     <zorder>wHeader</zorder>
      <zorder>wInfo</zorder>
      <zorder>wView</zorder>
     </widget>
